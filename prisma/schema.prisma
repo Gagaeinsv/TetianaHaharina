@@ -1,0 +1,75 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Profile {
+  id              Int              @id @default(1)
+  name            String
+  title           String
+  subtitle        String
+  bio             String
+  experience      Int
+  phone           String
+  whatsapp        String
+  facebook        String
+  specializations Specialization[]
+  paymentSettings PaymentSetting?
+}
+
+model Specialization {
+  id        Int     @id @default(autoincrement())
+  name      String
+  profileId Int
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
+
+model Service {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  duration    Int       // in minutes
+  priceUah    Int
+  bookings    Booking[]
+}
+
+model LegalDoc {
+  id      Int    @id @default(autoincrement())
+  type    String // "OFFER" or "PRIVACY"
+  title   String
+  content String
+}
+
+model Booking {
+  id            String   @id @default(uuid())
+  clientName    String
+  clientPhone   String
+  clientEmail   String
+  date          String   // YYYY-MM-DD
+  timeSlot      String   // HH:MM
+  serviceId     Int
+  service       Service  @relation(fields: [serviceId], references: [id])
+  status        String   @default("PENDING") // "PENDING", "CONFIRMED", "CANCELLED"
+  paymentStatus String   @default("PENDING") // "PENDING", "PAID"
+  paymentMethod String   @default("IBAN")    // "IBAN", "MONO", "PAYPAL"
+  createdAt     DateTime @default(now())
+}
+
+model PaymentSetting {
+  id         Int     @id @default(1)
+  profileId  Int     @unique
+  profile    Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  iban       String  @default("")
+  bankName   String  @default("")
+  edrpou     String  @default("")
+  monoLink   String  @default("")
+  paypalLink String  @default("")
+  paypalEmail String @default("")
+  useIban    Boolean @default(true)
+  useMono    Boolean @default(false)
+  usePaypal  Boolean @default(false)
+}
