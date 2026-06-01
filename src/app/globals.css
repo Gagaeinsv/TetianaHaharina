@@ -2517,9 +2517,36 @@ hr {
   }
 
   /* Typography Rules */
-  body, p, span, li, a, td, label, input, select, textarea {
+  body, p, li, a:not(.logo-name):not(.logo-title), td, label, input, select, textarea {
     font-size: 16px !important; /* Enforce minimum body text size of 16px */
     text-align: left;
+  }
+
+  .logo {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    max-width: 70% !important;
+  }
+
+  .logo-name {
+    font-size: 1.35rem !important;
+    font-family: var(--font-serif) !important;
+    font-weight: 700 !important;
+    color: var(--color-primary) !important;
+    text-align: left !important;
+  }
+
+  .logo-title {
+    font-size: 0.65rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    color: var(--color-text-muted) !important;
+    white-space: normal !important; /* Allow wrapping to 2 lines on small viewports */
+    line-height: 1.3 !important;
+    max-width: 250px !important;
+    text-align: left !important;
+    margin-top: 0.25rem !important;
   }
 
   h1 {
