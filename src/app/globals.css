@@ -2946,15 +2946,17 @@ hr {
 
 .bg-section-hero {
   background-image: 
-    linear-gradient(to left, rgba(250, 251, 251, 0.05) 0%, rgba(250, 251, 251, 0.25) 45%, rgba(250, 251, 251, 0.85) 75%, var(--color-bg) 95%),
+    linear-gradient(to right, rgba(250, 251, 251, 0.05) 0%, rgba(250, 251, 251, 0.25) 45%, rgba(250, 251, 251, 0.85) 75%, var(--color-bg) 95%),
     linear-gradient(to bottom, transparent 60%, var(--color-white) 100%),
     url('/avatar5.jpg');
-  background-position: right 15%;
+  background-position: left top;
 }
 
 .bg-section-quote {
-  background-image: linear-gradient(rgba(34, 44, 36, 0.75), rgba(34, 44, 36, 0.75)), url('/avatar.jpg');
-  background-position: center center;
+  background-image: 
+    linear-gradient(to right, rgba(34, 44, 36, 0.35) 0%, rgba(34, 44, 36, 0.8) 55%, rgba(34, 44, 36, 0.95) 90%), 
+    url('/avatar.jpg');
+  background-position: left top;
 }
 
 .bg-section-quote h2,
@@ -2968,34 +2970,34 @@ hr {
 
 .bg-section-welcome {
   background-image: 
-    linear-gradient(to left, rgba(250, 251, 251, 0.05) 0%, rgba(250, 251, 251, 0.25) 45%, rgba(250, 251, 251, 0.85) 75%, var(--color-bg) 95%),
+    linear-gradient(to right, rgba(250, 251, 251, 0.05) 0%, rgba(250, 251, 251, 0.25) 45%, rgba(250, 251, 251, 0.85) 75%, var(--color-bg) 95%),
     linear-gradient(to bottom, transparent 60%, var(--color-white) 100%),
     url('/avatar4.jpg');
-  background-position: right 15%;
+  background-position: left top;
 }
 
 .bg-section-services {
   background-image: 
-    linear-gradient(to left, rgba(250, 251, 251, 0.05) 0%, rgba(250, 251, 251, 0.25) 45%, rgba(250, 251, 251, 0.85) 75%, var(--color-bg) 95%),
+    linear-gradient(to right, rgba(250, 251, 251, 0.05) 0%, rgba(250, 251, 251, 0.25) 45%, rgba(250, 251, 251, 0.85) 75%, var(--color-bg) 95%),
     linear-gradient(to bottom, transparent 70%, var(--color-white) 100%),
     url('/avatar2.jpg');
-  background-position: right 15%;
+  background-position: left top;
 }
 
 .bg-section-faq {
   background-image: 
-    linear-gradient(to left, rgba(250, 251, 251, 0.05) 0%, rgba(250, 251, 251, 0.25) 45%, rgba(250, 251, 251, 0.85) 75%, var(--color-bg) 95%),
+    linear-gradient(to right, rgba(250, 251, 251, 0.05) 0%, rgba(250, 251, 251, 0.25) 45%, rgba(250, 251, 251, 0.85) 75%, var(--color-bg) 95%),
     linear-gradient(to bottom, transparent 70%, var(--color-white) 100%),
     url('/avatar3.jpg');
-  background-position: right 15%;
+  background-position: left top;
 }
 
 .bg-section-booking {
   background-image: 
-    linear-gradient(to left, rgba(250, 251, 251, 0.05) 0%, rgba(250, 251, 251, 0.25) 45%, rgba(250, 251, 251, 0.85) 75%, var(--color-bg) 95%),
+    linear-gradient(to right, rgba(250, 251, 251, 0.05) 0%, rgba(250, 251, 251, 0.25) 45%, rgba(250, 251, 251, 0.85) 75%, var(--color-bg) 95%),
     linear-gradient(to bottom, transparent 70%, var(--color-white) 100%),
     url('/nature_booking_bg.png');
-  background-position: right 15%;
+  background-position: left center;
 }
 
 .bg-section .hero-section,
@@ -3010,14 +3012,108 @@ hr {
   border-top: none !important;
 }
 
+/* Desktop Layout Adjustments to align text on the right and leave photo visible on the left */
 @media (min-width: 992px) {
-  .bg-section-hero .hero-image-container {
-    opacity: 0;
-    pointer-events: none;
+  /* Hero Section Grid Reorder */
+  .hero-grid {
+    display: grid !important;
+    grid-template-columns: 0.95fr 1.05fr !important;
+    align-items: center !important;
   }
-  .bg-section-welcome .philosophy-portrait-col {
-    opacity: 0;
-    pointer-events: none;
+  .hero-text-content {
+    grid-column: 2 !important;
+  }
+  .hero-image-container {
+    grid-column: 1 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* About Section Grid Reorder */
+  .about-layout-grid {
+    display: grid !important;
+    grid-template-columns: 0.95fr 1.05fr !important;
+    gap: 3rem !important;
+  }
+  .about-details-content {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+  }
+  .about-facts-container {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+  }
+
+  /* Philosophy Section Grid Reorder */
+  .philosophy-grid-container {
+    display: grid !important;
+    grid-template-columns: 0.95fr 1.05fr !important;
+    gap: 3rem !important;
+  }
+  .philosophy-content-col {
+    grid-column: 2 !important;
+  }
+  .philosophy-portrait-col {
+    grid-column: 1 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Quote Section Grid Reorder */
+  .manifesto-section .container {
+    display: grid !important;
+    grid-template-columns: 0.95fr 1.05fr !important;
+    text-align: left !important;
+  }
+  .manifesto-badge,
+  .manifesto-quote {
+    grid-column: 2 !important;
+    text-align: left !important;
+    margin-left: 0 !important;
+  }
+
+  /* Services Section Grid Reorder */
+  .services-section .container {
+    display: grid !important;
+    grid-template-columns: 0.8fr 1.2fr !important;
+    gap: 2rem !important;
+  }
+  .services-section .text-center {
+    grid-column: 2 !important;
+    text-align: left !important;
+    margin-bottom: 2rem !important;
+  }
+  .services-section .section-badge,
+  .services-section .section-subtitle,
+  .services-section h2 {
+    text-align: left !important;
+    margin-left: 0 !important;
+  }
+  .services-grid {
+    grid-column: 2 !important;
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  /* FAQ Section Grid Reorder */
+  .faq-section .container {
+    display: grid !important;
+    grid-template-columns: 0.8fr 1.2fr !important;
+    gap: 2rem !important;
+  }
+  .faq-section .text-center {
+    grid-column: 2 !important;
+    text-align: left !important;
+    margin-bottom: 2rem !important;
+  }
+  .faq-section .section-badge,
+  .faq-section .section-subtitle,
+  .faq-section h2 {
+    text-align: left !important;
+    margin-left: 0 !important;
+  }
+  .faq-accordion {
+    grid-column: 2 !important;
   }
 }
 
@@ -3042,6 +3138,7 @@ hr {
     background-position: center center !important;
   }
 }
+
 
 
 
