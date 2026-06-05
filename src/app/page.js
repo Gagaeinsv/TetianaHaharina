@@ -182,46 +182,50 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="hero-section">
-        <div className="container">
-          <div className="hero-grid">
-            <div className="hero-text-content">
-              <span className="hero-badge">⭐ Практикуюча психологиня • {profile.experience} років досвіду</span>
-              <h1>Простір безпеки та професійної психологічної підтримки</h1>
-              <p className="hero-subtitle">{profile.subtitle}</p>
-              <p className="hero-lead">Офіційна психотерапія в рамках українського законодавства. Допомагаю відновити внутрішній баланс, порозумітися з близькими та знайти опору в моменти невизначеності.</p>
-              
-              <div className="hero-actions">
-                <a href="#booking" className="btn btn-primary btn-lg">Домовитися про зустріч</a>
-                <a href="#about" className="btn btn-secondary btn-lg hero-btn-secondary">Дізнатися більше</a>
-              </div>
+      <div className="bg-section bg-section-hero">
+        <section className="hero-section">
+          <div className="container">
+            <div className="hero-grid">
+              <div className="hero-text-content">
+                <span className="hero-badge">⭐ Практикуюча психологиня • {profile.experience} років досвіду</span>
+                <h1>Простір безпеки та професійної психологічної підтримки</h1>
+                <p className="hero-subtitle">{profile.subtitle}</p>
+                <p className="hero-lead">Офіційна психотерапія в рамках українського законодавства. Допомагаю відновити внутрішній баланс, порозумітися з близькими та знайти опору в моменти невизначеності.</p>
+                
+                <div className="hero-actions">
+                  <a href="#booking" className="btn btn-primary btn-lg">Домовитися про зустріч</a>
+                  <a href="#about" className="btn btn-secondary btn-lg hero-btn-secondary">Дізнатися більше</a>
+                </div>
 
-              {/* Trust Tags */}
-              <div className="hero-trust-tags">
-                <span className="trust-tag-item">🛡️ 100% Конфіденційність</span>
-                <span className="trust-tag-item">💼 14 років досвіду</span>
-                <span className="trust-tag-item">🌍 Онлайн по всьому світу</span>
+                {/* Trust Tags */}
+                <div className="hero-trust-tags">
+                  <span className="trust-tag-item">🛡️ 100% Конфіденційність</span>
+                  <span className="trust-tag-item">💼 14 років досвіду</span>
+                  <span className="trust-tag-item">🌍 Онлайн по всьому світу</span>
+                </div>
               </div>
-            </div>
-            
-            <div className="hero-image-container">
-              <div className="hero-portrait-card">
-                <img src={activeBgs.hero} alt={profile.name} className="hero-portrait-img" />
+              
+              <div className="hero-image-container">
+                <div className="hero-portrait-card">
+                  <img src={activeBgs.hero} alt={profile.name} className="hero-portrait-img" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Manifesto Section */}
-      <section className="manifesto-section">
-        <div className="container text-center">
-          <span className="manifesto-badge">Моя місія</span>
-          <p className="manifesto-quote">
-            «Я прагну допомогти вам почути і зрозуміти себе, знайти внутрішній баланс та відновити гармонію у стосунках із близькими»
-          </p>
-        </div>
-      </section>
+      <div className="bg-section bg-section-quote">
+        <section className="manifesto-section">
+          <div className="container text-center">
+            <span className="manifesto-badge">Моя місія</span>
+            <p className="manifesto-quote">
+              «Я прагну допомогти вам почути і зрозуміти себе, знайти внутрішній баланс та відновити гармонію у стосунках із близькими»
+            </p>
+          </div>
+        </section>
+      </div>
 
       {/* Philosophy principles section */}
       <section id="philosophy" className="philosophy-section">
@@ -257,62 +261,65 @@ export default function Home() {
       </section>
 
       {/* Bio / About Section */}
-      <section id="about" className="about-section">
-        <div className="container">
-          <div className="about-layout-grid">
-            <div className="about-details-content">
-              <span className="section-badge">Про мене</span>
-              <h2>{profile.name}</h2>
-              <h4 className="about-specialty">{profile.title} • {profile.subtitle}</h4>
-              <p className="about-text">{profile.bio}</p>
-              
-              <div className="volunteer-badges mt-6">
-                <span className="v-badge">ГО "Соціальний проєкт "Разом"</span>
-                <span className="v-badge">ГО "Ранні пташки"</span>
-                <span className="v-badge">Гейткіпер</span>
-                <span className="v-badge">Центр "Перспектива"</span>
+      <div className="bg-section bg-section-welcome">
+        <section id="about" className="about-section">
+          <div className="container">
+            <div className="about-layout-grid">
+              <div className="about-details-content">
+                <span className="section-badge">Про мене</span>
+                <h2>{profile.name}</h2>
+                <h4 className="about-specialty">{profile.title} • {profile.subtitle}</h4>
+                <p className="about-text">{profile.bio}</p>
+                
+                <div className="volunteer-badges mt-6">
+                  <span className="v-badge">ГО "Соціальний проєкт "Разом"</span>
+                  <span className="v-badge">ГО "Ранні пташки"</span>
+                  <span className="v-badge">Гейткіпер</span>
+                  <span className="v-badge">Центр "Перспектива"</span>
+                </div>
+              </div>
+
+              <div className="about-facts-container">
+                <div className="facts-card">
+                  <h3>Професійна довідка</h3>
+                  <ul className="facts-list">
+                    <li><strong>🎓 Освіта:</strong> Вища психологічна, додаткова сертифікація за європейськими стандартами</li>
+                    <li><strong>💼 Досвід:</strong> 14 років практичної роботи</li>
+                    <li><strong>🌍 Формат:</strong> Онлайн-консультації по всьому світу</li>
+                    <li><strong>🗣️ Мови:</strong> Українська, російська</li>
+                    <li><strong>🔒 Гарантія:</strong> Діяльність офіційно зареєстрована ФОП</li>
+                  </ul>
+                </div>
               </div>
             </div>
 
-            <div className="about-facts-container">
-              <div className="facts-card">
-                <h3>Професійна довідка</h3>
-                <ul className="facts-list">
-                  <li><strong>🎓 Освіта:</strong> Вища психологічна, додаткова сертифікація за європейськими стандартами</li>
-                  <li><strong>💼 Досвід:</strong> 14 років практичної роботи</li>
-                  <li><strong>🌍 Формат:</strong> Онлайн-консультації по всьому світу</li>
-                  <li><strong>🗣️ Мови:</strong> Українська, російська</li>
-                  <li><strong>🔒 Гарантія:</strong> Діяльність офіційно зареєстрована ФОП</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="about-philosophy-row">
-            <div className="philosophy-grid-container">
-              <div className="philosophy-content-col">
-                <div className="about-philosophy-card">
-                  <h3>Мій професійний підхід</h3>
-                  <div className="philosophy-details">
-                    <p>У своїй роботі я створюю безпечний, конфіденційний та підтримуючий простір, де ви зможете розділити свої переживання. Моя мета — допомогти батькам налагодити зв'язок з дітьми, підтримати підлітків у складний період та надати ресурс дорослим.</p>
-                    <ul className="philosophy-list">
-                      <li>🌱 100% конфіденційність та безпека</li>
-                      <li>🤝 Підтримка без оцінювання та осуду</li>
-                      <li>💼 Офіційний ФОП — безпека розрахунків</li>
-                      <li>📱 Зручний зв'язок та онлайн-консультації</li>
-                    </ul>
+            <div className="about-philosophy-row">
+              <div className="philosophy-grid-container">
+                <div className="philosophy-content-col">
+                  <div className="about-philosophy-card">
+                    <h3>Мій професійний підхід</h3>
+                    <div className="philosophy-details">
+                      <p>У своїй роботі я створюю безпечний, конфіденційний та підтримуючий простір, де ви зможете розділити свої переживання. Моя мета — допомогти батькам налагодити зв'язок з дітьми, підтримати підлітків у складний період та надати ресурс дорослим.</p>
+                      <ul className="philosophy-list">
+                        <li>🌱 100% конфіденційність та безпека</li>
+                        <li>🤝 Підтримка без оцінювання та осуду</li>
+                        <li>💼 Офіційний ФОП — безпека розрахунків</li>
+                        <li>📱 Зручний зв'язок та онлайн-консультації</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className="philosophy-portrait-col">
+                  <div className="philosophy-portrait-card">
+                    <img src={activeBgs.wrapper2} alt={`${profile.name} — фото`} className="philosophy-portrait-img" />
                   </div>
                 </div>
               </div>
-              <div className="philosophy-portrait-col">
-                <div className="philosophy-portrait-card">
-                  <img src={activeBgs.wrapper2} alt={`${profile.name} — фото`} className="philosophy-portrait-img" />
-                </div>
-              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+
 
       {/* Specializations (Requests) Section */}
       <section id="specializations" className="specs-section">
@@ -345,43 +352,46 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="services-section">
-        <div className="container">
-          <div className="text-center mb-12">
-            <span className="section-badge">Послуги та вартість</span>
-            <h2>Формати роботи та тарифи</h2>
-            <p className="section-subtitle">Оберіть формат, який найкраще відповідає вашому запиту</p>
+      <div className="bg-section bg-section-services">
+        <section id="services" className="services-section">
+          <div className="container">
+            <div className="text-center mb-12">
+              <span className="section-badge">Послуги та вартість</span>
+              <h2>Формати роботи та тарифи</h2>
+              <p className="section-subtitle">Оберіть формат, який найкраще відповідає вашому запиту</p>
+            </div>
+            <div className="services-grid">
+              {services.map((s) => (
+                <div key={s.id} className="service-card-new">
+                  <div className="service-card-header-new">
+                    <span className="service-icon-new">🌸</span>
+                    <h3>{s.name}</h3>
+                  </div>
+                  <p className="service-desc-new">{s.description}</p>
+                  <div className="service-meta-new">
+                    <span>⏱️ {s.duration} хвилин</span>
+                    <span>🌍 Онлайн (Zoom / Google Meet / Telegram)</span>
+                  </div>
+                  <div className="service-price-row-new">
+                    <span className="price-label">Вартість сесії:</span>
+                    <span className="price-value">{s.priceUah} грн</span>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setSelectedServiceId(s.id);
+                      document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
+                    }} 
+                    className="btn btn-primary w-full"
+                  >
+                    Записатися на консультацію
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="services-grid">
-            {services.map((s) => (
-              <div key={s.id} className="service-card-new">
-                <div className="service-card-header-new">
-                  <span className="service-icon-new">🌸</span>
-                  <h3>{s.name}</h3>
-                </div>
-                <p className="service-desc-new">{s.description}</p>
-                <div className="service-meta-new">
-                  <span>⏱️ {s.duration} хвилин</span>
-                  <span>🌍 Онлайн (Zoom / Google Meet / Telegram)</span>
-                </div>
-                <div className="service-price-row-new">
-                  <span className="price-label">Вартість сесії:</span>
-                  <span className="price-value">{s.priceUah} грн</span>
-                </div>
-                <button 
-                  onClick={() => {
-                    setSelectedServiceId(s.id);
-                    document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
-                  }} 
-                  className="btn btn-primary w-full"
-                >
-                  Записатися на консультацію
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
+
 
       {/* How it Works Section */}
       <section id="how-it-works" className="how-it-works-section">
@@ -547,230 +557,236 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="faq-section">
-        <div className="container">
-          <div className="text-center mb-12">
-            <span className="section-badge">Часті запитання</span>
-            <h2>Відповіді на ваші запитання</h2>
-            <p className="section-subtitle">Дізнайтеся більше про практичні та організаційні моменти роботи</p>
-          </div>
-          <div className="faq-accordion">
-            {[
-              {
-                q: "Як часто потрібно проходити сесії?",
-                a: "Зазвичай зустрічі проходять один раз на тиждень. Це оптимальна частота для стабільної роботи над запитом та інтеграції змін у повсякденне життя."
-              },
-              {
-                q: "Яка тривалість однієї консультації?",
-                a: "Індивідуальна та дитячо-батьківська консультації тривають 50 хвилин. Це стандартний терапевтичний час."
-              },
-              {
-                q: "Чи можна скасувати або перенести сесію?",
-                a: "Так, перенос або скасування можливі без додаткової оплати не пізніше ніж за 24 години до призначеного часу. За скасування пізніше цього терміну сесія оплачується у повному обсязі."
-              },
-              {
-                q: "Як проходить оплата?",
-                a: "Ви можете сплатити сесію офіційно на реквізити ФОП (IBAN), карткою онлайн через Monobank або через PayPal (для міжнародних клієнтів) безпосередньо після онлайн-запису."
-              },
-              {
-                q: "Чи є консультації конфіденційними?",
-                a: "Так, повна конфіденційність є базовим правилом моєї роботи. Будь-які деталі вашої історії залишаються у суворій таємниці, за винятком випадків супервізії (без імен та ідентифікаторів) та ситуацій загрози життю."
-              },
-              {
-                q: "З якого віку ви працюєте з підлітками?",
-                a: "Працюю з підлітками від 12 років. Зверніть увагу: терапія неповнолітніх можлива виключно за згодою хоча б одного з батьків або опікунів."
-              }
-            ].map((item, index) => (
-              <div key={index} className={`faq-item ${activeFaq === index ? 'open' : ''}`}>
-                <div 
-                  className="faq-question"
-                  onClick={() => setActiveFaq(activeFaq === index ? null : index)}
-                >
-                  <h4>{item.q}</h4>
-                  <span className="faq-arrow">{activeFaq === index ? '▲' : '▼'}</span>
-                </div>
-                {activeFaq === index && (
-                  <div className="faq-answer">
-                    <p>{item.a}</p>
+      <div className="bg-section bg-section-faq">
+        <section id="faq" className="faq-section">
+          <div className="container">
+            <div className="text-center mb-12">
+              <span className="section-badge">Часті запитання</span>
+              <h2>Відповіді на ваші запитання</h2>
+              <p className="section-subtitle">Дізнайтеся більше про практичні та організаційні моменти роботи</p>
+            </div>
+            <div className="faq-accordion">
+              {[
+                {
+                  q: "Як часто потрібно проходити сесії?",
+                  a: "Зазвичай зустрічі проходять один раз на тиждень. Это оптимальна частота для стабільної роботи над запитом та інтеграції змін у повсякденне життя."
+                },
+                {
+                  q: "Яка тривалість однієї консультації?",
+                  a: "Індивідуальна та дитячо-батьківська консультації тривають 50 хвилин. Це стандартний терапевтичний час."
+                },
+                {
+                  q: "Чи можна скасувати або перенести сесію?",
+                  a: "Так, перенос або скасування можливі без додаткової оплати не пізніше ніж за 24 години до призначеного часу. За скасування пізніше цього терміну сесія оплачується у повному обсязі."
+                },
+                {
+                  q: "Як проходить оплата?",
+                  a: "Ви можете сплатити сесію офіційно на реквізити ФОП (IBAN), карткою онлайн через Monobank або через PayPal (для міжнародних клієнтів) безпосередньо після онлайн-запису."
+                },
+                {
+                  q: "Чи є консультації конфіденційними?",
+                  a: "Так, повна конфіденційність є базовим правилом моєї роботи. Будь-які деталі вашої історії залишаються у суворій таємниці, за винятком випадків супервізії (без імен та ідентифікаторів) та ситуацій загрози життю."
+                },
+                {
+                  q: "З якого віку ви працюєте з підлітками?",
+                  a: "Працюю з підлітками від 12 років. Зверніть увагу: терапія неповнолітніх можлива виключно за згодою хоча б одного з батьків або опікунів."
+                }
+              ].map((item, index) => (
+                <div key={index} className={`faq-item ${activeFaq === index ? 'open' : ''}`}>
+                  <div 
+                    className="faq-question"
+                    onClick={() => setActiveFaq(activeFaq === index ? null : index)}
+                  >
+                    <h4>{item.q}</h4>
+                    <span className="faq-arrow">{activeFaq === index ? '▲' : '▼'}</span>
                   </div>
-                )}
-              </div>
-            ))}
+                  {activeFaq === index && (
+                    <div className="faq-answer">
+                      <p>{item.a}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+
 
       {/* Booking and Calendar Section */}
-      <section id="booking" className="booking-section">
-        <div className="container">
-          <div className="text-center mb-12">
-            <span className="section-badge">Онлайн-запис</span>
-            <h2>Записатися на консультацію</h2>
-            <p className="section-subtitle">Оберіть зручний час, введіть контакти та забронюйте сесію</p>
-          </div>
+      <div className="bg-section bg-section-booking">
+        <section id="booking" className="booking-section">
+          <div className="container">
+            <div className="text-center mb-12">
+              <span className="section-badge">Онлайн-запис</span>
+              <h2>Записатися на консультацію</h2>
+              <p className="section-subtitle">Оберіть зручний час, введіть контакти та забронюйте сесію</p>
+            </div>
 
-          <div className="booking-box-container">
-            {!successfulBooking ? (
-              <div className="booking-form-wrapper">
-                <Calendar 
-                  services={services} 
-                  paymentSettings={paymentSettings} 
-                  onBookingSuccess={(booking) => setSuccessfulBooking(booking)}
-                  preselectedServiceId={selectedServiceId}
-                />
-                
-                {/* Supportive microcopy helper */}
-                <div className="booking-helper-microcopy">
-                  <p>🤍 Перший крок можна зробити у спокійному для вас темпі. Не обов’язково точно формулювати запит заздалегідь — ми розберемося разом під час зустрічі.</p>
-                </div>
-              </div>
-            ) : (
-              /* Payment Checkout Flow */
-              <div className="payment-checkout-card">
-                <div className="checkout-success-header">
-                  <span className="success-icon">🎉</span>
-                  <h2>Запис успішно створено!</h2>
-                  <p>Дякуємо за запис, <strong>{successfulBooking.clientName}</strong>. Вашу сесію заброньовано на:</p>
-                  <div className="checkout-session-details">
-                    <span>🗓️ {successfulBooking.date}</span>
-                    <span>⏱️ {successfulBooking.timeSlot}</span>
-                    <span>💼 {successfulBooking.service.name}</span>
-                    <span className="price-tag">{successfulBooking.service.priceUah} грн</span>
+            <div className="booking-box-container">
+              {!successfulBooking ? (
+                <div className="booking-form-wrapper">
+                  <Calendar 
+                    services={services} 
+                    paymentSettings={paymentSettings} 
+                    onBookingSuccess={(booking) => setSuccessfulBooking(booking)}
+                    preselectedServiceId={selectedServiceId}
+                  />
+                  
+                  {/* Supportive microcopy helper */}
+                  <div className="booking-helper-microcopy">
+                    <p>🤍 Перший крок можна зробити у спокійному для вас темпі. Не обов’язково точно формулювати запит заздалегідь — ми розберемося разом під час зустрічі.</p>
                   </div>
                 </div>
-
-                <div className="checkout-payment-details">
-                  <h3>Оплата послуг</h3>
-                  <p className="mb-4">Згідно з законодавством України, ви здійснюєте офіційну оплату ФОП. Будь ласка, виконайте оплату відповідно до обраного методу:</p>
-
-                  {/* Payment option: IBAN */}
-                  {successfulBooking.paymentMethod === 'IBAN' && (
-                    <div className="iban-payment-box">
-                      <h4>Реквізити ФОП для оплати (IBAN)</h4>
-                      <table className="iban-table">
-                        <tbody>
-                          <tr>
-                            <td>Отримувач:</td>
-                            <td><strong>ФОП {profile.name}</strong></td>
-                          </tr>
-                          <tr>
-                            <td>Рахунок IBAN:</td>
-                            <td>
-                              <span className="iban-number">{paymentSettings.iban}</span>
-                              <button 
-                                onClick={() => copyToClipboard(paymentSettings.iban)}
-                                className="btn-copy"
-                              >
-                                📋
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>ЄДРПОУ / ІПН:</td>
-                            <td>
-                              <span>{paymentSettings.edrpou}</span>
-                              <button 
-                                onClick={() => copyToClipboard(paymentSettings.edrpou)}
-                                className="btn-copy"
-                              >
-                                📋
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Банк:</td>
-                            <td>{paymentSettings.bankName}</td>
-                          </tr>
-                          <tr>
-                            <td>Призначення:</td>
-                            <td>Оплата за психологічні послуги за записом від {successfulBooking.date}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div className="payment-alert mt-4">
-                        💡 Будь ласка, надішліть квитанцію про оплату в один із месенджерів після здійснення переказу.
-                      </div>
+              ) : (
+                /* Payment Checkout Flow */
+                <div className="payment-checkout-card">
+                  <div className="checkout-success-header">
+                    <span className="success-icon">🎉</span>
+                    <h2>Запис успішно створено!</h2>
+                    <p>Дякуємо за запис, <strong>{successfulBooking.clientName}</strong>. Вашу сесію заброньовано на:</p>
+                    <div className="checkout-session-details">
+                      <span>🗓️ {successfulBooking.date}</span>
+                      <span>⏱️ {successfulBooking.timeSlot}</span>
+                      <span>💼 {successfulBooking.service.name}</span>
+                      <span className="price-tag">{successfulBooking.service.priceUah} грн</span>
                     </div>
-                  )}
+                  </div>
 
-                  {/* Payment option: Monobank */}
-                  {successfulBooking.paymentMethod === 'MONO' && (
-                    <div className="mono-payment-box text-center">
-                      <h4>Оплата онлайн через Monobank</h4>
-                      <p>Клацніть кнопку нижче, щоб перейти на офіційну сторінку оплати карткою або через Apple Pay / Google Pay / Monopay.</p>
+                  <div className="checkout-payment-details">
+                    <h3>Оплата послуг</h3>
+                    <p className="mb-4">Згідно з законодавством України, ви здійснюєте офіційну оплату ФОП. Будь ласка, виконайте оплату відповідно до обраного методу:</p>
+
+                    {/* Payment option: IBAN */}
+                    {successfulBooking.paymentMethod === 'IBAN' && (
+                      <div className="iban-payment-box">
+                        <h4>Реквізити ФОП для оплати (IBAN)</h4>
+                        <table className="iban-table">
+                          <tbody>
+                            <tr>
+                              <td>Отримувач:</td>
+                              <td><strong>ФОП {profile.name}</strong></td>
+                            </tr>
+                            <tr>
+                              <td>Рахунок IBAN:</td>
+                              <td>
+                                <span className="iban-number">{paymentSettings.iban}</span>
+                                <button 
+                                  onClick={() => copyToClipboard(paymentSettings.iban)}
+                                  className="btn-copy"
+                                >
+                                  📋
+                                </button>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>ЄДРПОУ / ІПН:</td>
+                              <td>
+                                <span>{paymentSettings.edrpou}</span>
+                                <button 
+                                  onClick={() => copyToClipboard(paymentSettings.edrpou)}
+                                  className="btn-copy"
+                                >
+                                  📋
+                                </button>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Банк:</td>
+                              <td>{paymentSettings.bankName}</td>
+                            </tr>
+                            <tr>
+                              <td>Призначення:</td>
+                              <td>Оплата за психологічні послуги за записом від {successfulBooking.date}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div className="payment-alert mt-4">
+                          💡 Будь ласка, надішліть квитанцію про оплату в один із месенджерів після здійснення переказу.
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Payment option: Monobank */}
+                    {successfulBooking.paymentMethod === 'MONO' && (
+                      <div className="mono-payment-box text-center">
+                        <h4>Оплата онлайн через Monobank</h4>
+                        <p>Клацніть кнопку нижче, щоб перейти на офіційну сторінку оплати карткою або через Apple Pay / Google Pay / Monopay.</p>
+                        <a 
+                          href={paymentSettings.monoLink} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="btn btn-mono mt-4"
+                        >
+                          💳 Оплатити через Monobank
+                        </a>
+                      </div>
+                    )}
+
+                    {/* Payment option: PayPal */}
+                    {successfulBooking.paymentMethod === 'PAYPAL' && (
+                      <div className="paypal-payment-box text-center">
+                        <h4>Оплата через PayPal</h4>
+                        <p>Ви можете сплатити сесію за кордону за допомогою PayPal. Надішліть платіж на електронну адресу або перейдіть за посиланням PayPal.Me.</p>
+                        <div className="paypal-details mt-4">
+                          <div>Email: <strong>{paymentSettings.paypalEmail}</strong></div>
+                          {paymentSettings.paypalLink && (
+                            <a 
+                              href={paymentSettings.paypalLink} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="btn btn-paypal mt-4"
+                            >
+                              💸 Оплатити через PayPal.Me
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="checkout-actions">
+                    <p className="mb-4">Зв’яжіться зі спеціалісткою для підтвердження сесії:</p>
+                    <div className="messenger-buttons">
                       <a 
-                        href={paymentSettings.monoLink} 
+                        href={`https://t.me/${profile.phone.replace(/\+/g, '').replace(/^[0-9]/, '')}`} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="btn btn-mono mt-4"
+                        className="btn-msg telegram"
                       >
-                        💳 Оплатити через Monobank
+                        ✈️ Telegram
+                      </a>
+                      <a 
+                        href={`viber://chat?number=%2B${profile.phone.replace(/\+/g, '')}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="btn-msg viber"
+                      >
+                        💬 Viber
+                      </a>
+                      <a 
+                        href={`https://wa.me/${profile.whatsapp.replace(/\+/g, '')}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="btn-msg whatsapp"
+                      >
+                        💬 WhatsApp
                       </a>
                     </div>
-                  )}
-
-                  {/* Payment option: PayPal */}
-                  {successfulBooking.paymentMethod === 'PAYPAL' && (
-                    <div className="paypal-payment-box text-center">
-                      <h4>Оплата через PayPal</h4>
-                      <p>Ви можете сплатити сесію за кордону за допомогою PayPal. Надішліть платіж на електронну адресу або перейдіть за посиланням PayPal.Me.</p>
-                      <div className="paypal-details mt-4">
-                        <div>Email: <strong>{paymentSettings.paypalEmail}</strong></div>
-                        {paymentSettings.paypalLink && (
-                          <a 
-                            href={paymentSettings.paypalLink} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="btn btn-paypal mt-4"
-                          >
-                            💸 Оплатити через PayPal.Me
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="checkout-actions">
-                  <p className="mb-4">Зв’яжіться зі спеціалісткою для підтвердження сесії:</p>
-                  <div className="messenger-buttons">
-                    <a 
-                      href={`https://t.me/${profile.phone.replace(/\+/g, '').replace(/^[0-9]/, '')}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="btn-msg telegram"
+                    <button 
+                      onClick={() => setSuccessfulBooking(null)} 
+                      className="btn btn-secondary mt-8"
                     >
-                      ✈️ Telegram
-                    </a>
-                    <a 
-                      href={`viber://chat?number=%2B${profile.phone.replace(/\+/g, '')}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="btn-msg viber"
-                    >
-                      💬 Viber
-                    </a>
-                    <a 
-                      href={`https://wa.me/${profile.whatsapp.replace(/\+/g, '')}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="btn-msg whatsapp"
-                    >
-                      💬 WhatsApp
-                    </a>
+                      Забронювати ще одну сесію
+                    </button>
                   </div>
-                  <button 
-                    onClick={() => setSuccessfulBooking(null)} 
-                    className="btn btn-secondary mt-8"
-                  >
-                    Забронювати ще одну сесію
-                  </button>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+
 
       {/* Footer Section */}
       <footer className="site-footer">
