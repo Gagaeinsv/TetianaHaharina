@@ -15,7 +15,8 @@ export async function getSessionToken() {
 }
 
 export async function loginAdmin(password) {
-  if (password !== process.env.ADMIN_PASSWORD) {
+  const expectedPassword = process.env.ADMIN_PASSWORD || 'default-password';
+  if (password !== expectedPassword) {
     return false;
   }
   
