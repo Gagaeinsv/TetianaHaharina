@@ -59,6 +59,13 @@ export default function Home() {
   const [legalModal, setLegalModal] = useState({ isOpen: false, title: '', content: '' });
   const [certModal, setCertModal] = useState({ isOpen: false, imgPath: '', title: '' });
 
+  // Derived state values (safely handled when data is null)
+  const profile = data?.profile;
+  const services = data?.services || [];
+  const paymentSettings = profile?.paymentSettings;
+  const selectedService = services.find(s => s.id === selectedServiceId) || services[0];
+  const activeCalendlyLink = selectedService?.calendlyLink || profile?.calendlyLink || 'https://calendly.com/tetianahaharina';
+
   useEffect(() => {
     async function fetchContent() {
       try {
@@ -110,6 +117,48 @@ export default function Home() {
       window.removeEventListener('message', handleCalendlyEvent);
     };
   }, [data, selectedServiceId]);
+
+  // Initialize Calendly widget using official JS API to avoid SAMEORIGIN iframe blocking
+  useEffect(() => {
+    if (typeof window === 'undefined' || !activeCalendlyLink) return;
+
+    let isMounted = true;
+
+    const initCalendly = () => {
+      if (!isMounted) return;
+      const container = document.getElementById('calendly-embed-container');
+      if (container && window.Calendly) {
+        container.innerHTML = '';
+        window.Calendly.initInlineWidget({
+          url: activeCalendlyLink,
+          parentElement: container,
+          prefill: {},
+          pageSettings: {
+            hideLandingPageDetails: false,
+            hideGdprBanner: true
+          }
+        });
+      }
+    };
+
+    if (window.Calendly) {
+      initCalendly();
+    } else {
+      let script = document.getElementById('calendly-widget-js');
+      if (!script) {
+        script = document.createElement('script');
+        script.id = 'calendly-widget-js';
+        script.src = 'https://assets.calendly.com/assets/external/widget.js';
+        script.async = true;
+        document.body.appendChild(script);
+      }
+      script.addEventListener('load', initCalendly);
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [activeCalendlyLink, data]);
 
   // Background image states
   const [activeBgs, setActiveBgs] = useState({
@@ -174,12 +223,7 @@ export default function Home() {
     );
   }
 
-  const { profile, services } = data;
-  const paymentSettings = profile?.paymentSettings;
-
-  const selectedService = services?.find(s => s.id === selectedServiceId) || services?.[0];
-  const activeCalendlyLink = selectedService?.calendlyLink || profile?.calendlyLink || 'https://calendly.com/tetianahaharina';
-  const embedUrl = activeCalendlyLink ? `${activeCalendlyLink}${activeCalendlyLink.includes('?') ? '&' : '?'}embed_domain=${typeof window !== 'undefined' ? window.location.hostname : ''}&embed_type=Inline` : '';
+  // Data is guaranteed to be loaded here due to early returns above
 
   return (
     <div className="landing-layout">
@@ -672,15 +716,12 @@ export default function Home() {
                     ))}
                   </div>
 
-                  {/* Calendly Inline Iframe */}
+                  {/* Calendly Inline Embed Container */}
                   <div className="calendly-iframe-container">
-                    <iframe
-                      src={embedUrl}
-                      width="100%"
-                      height="700px"
-                      frameBorder="0"
-                      style={{ minWidth: '320px', height: '700px', borderRadius: '12px', background: 'white' }}
-                    ></iframe>
+                    <div
+                      id="calendly-embed-container"
+                      style={{ minWidth: '320px', height: '700px', borderRadius: '12px', background: 'white', overflow: 'hidden' }}
+                    ></div>
                   </div>
                   
                   {/* Supportive microcopy helper */}
