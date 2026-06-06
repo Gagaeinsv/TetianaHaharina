@@ -22,6 +22,7 @@ export default function AdminDashboard() {
     phone: '',
     whatsapp: '',
     facebook: '',
+    calendlyLink: '',
   });
 
   const [specializations, setSpecializations] = useState([]);
@@ -84,6 +85,7 @@ export default function AdminDashboard() {
             phone: data.profile.phone || '',
             whatsapp: data.profile.whatsapp || '',
             facebook: data.profile.facebook || '',
+            calendlyLink: data.profile.calendlyLink || '',
           });
           if (data.profile.specializations) {
             setSpecializations(data.profile.specializations.map(s => s.name));
@@ -179,7 +181,7 @@ export default function AdminDashboard() {
   };
 
   const addService = () => {
-    setServices([...services, { name: 'Нова послуга', description: '', duration: 50, priceUah: 1000 }]);
+    setServices([...services, { name: 'Нова послуга', description: '', duration: 50, priceUah: 1000, calendlyLink: '' }]);
   };
 
   const removeService = (index) => {
@@ -425,6 +427,15 @@ export default function AdminDashboard() {
                     onChange={e => setProfile({...profile, facebook: e.target.value})} 
                   />
                 </div>
+                <div className="form-group">
+                  <label>Посилання на Calendly (загальне)</label>
+                  <input 
+                    type="text" 
+                    value={profile.calendlyLink} 
+                    onChange={e => setProfile({...profile, calendlyLink: e.target.value})} 
+                    placeholder="https://calendly.com/your-username"
+                  />
+                </div>
               </div>
 
               <button 
@@ -520,6 +531,16 @@ export default function AdminDashboard() {
                       rows={2}
                       value={service.description} 
                       onChange={e => handleServiceChange(index, 'description', e.target.value)} 
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Посилання на Calendly для цієї послуги (якщо порожньо, використовується загальне посилання)</label>
+                    <input 
+                      type="text" 
+                      value={service.calendlyLink || ''} 
+                      onChange={e => handleServiceChange(index, 'calendlyLink', e.target.value)} 
+                      placeholder="https://calendly.com/your-username/service-slug"
                     />
                   </div>
                 </div>

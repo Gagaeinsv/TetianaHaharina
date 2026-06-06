@@ -24,6 +24,7 @@ async function main() {
       phone: '+380679637225',
       whatsapp: '+393290214199',
       facebook: 'https://www.facebook.com/haharinatetiana',
+      calendlyLink: 'https://calendly.com/tetianahaharina',
     }
   });
   console.log('Created profile:', profile.name);
@@ -56,19 +57,22 @@ async function main() {
       name: 'Індивідуальна сесія (онлайн)',
       description: 'Індивідуальна психологічна консультація для дорослих та підлітків. Робота з тривожністю, особистими кризами, адаптацією, конфліктами та сімейними проблемами.',
       duration: 50,
-      priceUah: 1200
+      priceUah: 1200,
+      calendlyLink: 'https://calendly.com/tetianahaharina/individual-session',
     },
     {
       name: 'Консультація з дитячо-батьківських стосунків',
       description: 'Робота з батьками щодо поведінки дітей, вікових криз, налагодження емоційного контакту, підтримки підлітків та вирішення конфліктів.',
       duration: 60,
-      priceUah: 1500
+      priceUah: 1500,
+      calendlyLink: 'https://calendly.com/tetianahaharina/parent-child-session',
     },
     {
       name: 'Інтервізійна зустріч',
       description: 'Професійна підтримка для практикуючих психологів. Розбір складних кейсів, аналіз терапевтичного процесу, профілактика професійного вигорання.',
       duration: 50,
-      priceUah: 1000
+      priceUah: 1000,
+      calendlyLink: 'https://calendly.com/tetianahaharina/intervision-session',
     }
   ];
 

@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Calendar from '@/components/Calendar';
 import Modal from '@/components/Modal';
 
 const specDetails = {
@@ -49,6 +48,7 @@ export default function Home() {
   // Booking state
   const [successfulBooking, setSuccessfulBooking] = useState(null);
   const [selectedServiceId, setSelectedServiceId] = useState(null);
+  const [chosenPaymentMethod, setChosenPaymentMethod] = useState('IBAN');
   
   // Custom interactive states
   const [activeFaq, setActiveFaq] = useState(null);
@@ -81,6 +81,35 @@ export default function Home() {
     }
     fetchContent();
   }, []);
+
+  // Set default payment method when settings load
+  useEffect(() => {
+    if (data?.profile?.paymentSettings) {
+      const ps = data.profile.paymentSettings;
+      if (ps.useIban) setChosenPaymentMethod('IBAN');
+      else if (ps.useMono) setChosenPaymentMethod('MONO');
+      else if (ps.usePaypal) setChosenPaymentMethod('PAYPAL');
+    }
+  }, [data]);
+
+  // Message event listener for Calendly
+  useEffect(() => {
+    if (!data || !data.services) return;
+    
+    const handleCalendlyEvent = (e) => {
+      if (e.data && e.data.event === 'calendly.event_scheduled') {
+        const selectedService = data.services.find(s => s.id === selectedServiceId) || data.services[0];
+        setSuccessfulBooking({
+          service: selectedService,
+        });
+      }
+    };
+
+    window.addEventListener('message', handleCalendlyEvent);
+    return () => {
+      window.removeEventListener('message', handleCalendlyEvent);
+    };
+  }, [data, selectedServiceId]);
 
   // Background image states
   const [activeBgs, setActiveBgs] = useState({
@@ -147,6 +176,10 @@ export default function Home() {
 
   const { profile, services } = data;
   const paymentSettings = profile?.paymentSettings;
+
+  const selectedService = services?.find(s => s.id === selectedServiceId) || services?.[0];
+  const activeCalendlyLink = selectedService?.calendlyLink || profile?.calendlyLink || 'https://calendly.com/tetianahaharina';
+  const embedUrl = activeCalendlyLink ? `${activeCalendlyLink}${activeCalendlyLink.includes('?') ? '&' : '?'}embed_domain=${typeof window !== 'undefined' ? window.location.hostname : ''}&embed_type=Inline` : '';
 
   return (
     <div className="landing-layout">
@@ -626,12 +659,29 @@ export default function Home() {
             <div className="booking-box-container">
               {!successfulBooking ? (
                 <div className="booking-form-wrapper">
-                  <Calendar 
-                    services={services} 
-                    paymentSettings={paymentSettings} 
-                    onBookingSuccess={(booking) => setSuccessfulBooking(booking)}
-                    preselectedServiceId={selectedServiceId}
-                  />
+                  {/* Service tabs above the iframe to switch booking types */}
+                  <div className="booking-service-tabs">
+                    {services.map((s) => (
+                      <button
+                        key={s.id}
+                        className={`service-tab-btn ${selectedServiceId === s.id ? 'active' : ''}`}
+                        onClick={() => setSelectedServiceId(s.id)}
+                      >
+                        {s.name} ({s.priceUah} грн)
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Calendly Inline Iframe */}
+                  <div className="calendly-iframe-container">
+                    <iframe
+                      src={embedUrl}
+                      width="100%"
+                      height="700px"
+                      frameBorder="0"
+                      style={{ minWidth: '320px', height: '700px', borderRadius: '12px', background: 'white' }}
+                    ></iframe>
+                  </div>
                   
                   {/* Supportive microcopy helper */}
                   <div className="booking-helper-microcopy">
@@ -644,23 +694,58 @@ export default function Home() {
                   <div className="checkout-success-header">
                     <span className="success-icon">🎉</span>
                     <h2>Запис успішно створено!</h2>
-                    <p>Дякуємо за запис, <strong>{successfulBooking.clientName}</strong>. Вашу сесію заброньовано на:</p>
+                    <p>Дякуємо за запис! Вашу сесію успішно заброньовано в Calendly.</p>
                     <div className="checkout-session-details">
-                      <span>🗓️ {successfulBooking.date}</span>
-                      <span>⏱️ {successfulBooking.timeSlot}</span>
-                      <span>💼 {successfulBooking.service.name}</span>
-                      <span className="price-tag">{successfulBooking.service.priceUah} грн</span>
+                      <span>💼 {successfulBooking.service?.name}</span>
+                      <span className="price-tag">{successfulBooking.service?.priceUah} грн</span>
+                    </div>
+                    <div className="payment-alert mt-4" style={{ backgroundColor: 'rgba(31, 62, 61, 0.05)', color: 'var(--color-primary)', borderColor: 'var(--color-accent)' }}>
+                      📅 Час та деталі зустрічі ви отримаєте у підтвердженні на вашу електронну пошту від Calendly.
                     </div>
                   </div>
 
                   <div className="checkout-payment-details">
                     <h3>Оплата послуг</h3>
-                    <p className="mb-4">Згідно з законодавством України, ви здійснюєте офіційну оплату ФОП. Будь ласка, виконайте оплату відповідно до обраного методу:</p>
+                    <p className="mb-6 text-center">Згідно з законодавством України, ви здійснюєте офіційну оплату ФОП. Будь ласка, оберіть зручний спосіб оплати:</p>
+
+                    {/* Payment Method Selector */}
+                    <div className="payment-select-grid mb-6" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+                      {paymentSettings.useIban && (
+                        <div 
+                          className={`payment-option ${chosenPaymentMethod === 'IBAN' ? 'selected' : ''}`}
+                          onClick={() => setChosenPaymentMethod('IBAN')}
+                          style={{ border: chosenPaymentMethod === 'IBAN' ? '2px solid var(--color-accent)' : '1px solid var(--glass-border)', padding: '1rem', borderRadius: '8px', cursor: 'pointer', backgroundColor: chosenPaymentMethod === 'IBAN' ? 'var(--color-primary-light)' : 'var(--color-white)' }}
+                        >
+                          <strong>Реквізити ФОП (IBAN)</strong>
+                          <p className="text-small text-muted" style={{ fontSize: '0.8rem', marginTop: '0.25rem' }}>Оплата за реквізитами в банку</p>
+                        </div>
+                      )}
+                      {paymentSettings.useMono && (
+                        <div 
+                          className={`payment-option ${chosenPaymentMethod === 'MONO' ? 'selected' : ''}`}
+                          onClick={() => setChosenPaymentMethod('MONO')}
+                          style={{ border: chosenPaymentMethod === 'MONO' ? '2px solid var(--color-accent)' : '1px solid var(--glass-border)', padding: '1rem', borderRadius: '8px', cursor: 'pointer', backgroundColor: chosenPaymentMethod === 'MONO' ? 'var(--color-primary-light)' : 'var(--color-white)' }}
+                        >
+                          <strong>Картка / Monobank</strong>
+                          <p className="text-small text-muted" style={{ fontSize: '0.8rem', marginTop: '0.25rem' }}>Оплата онлайн через Apple Pay / Google Pay</p>
+                        </div>
+                      )}
+                      {paymentSettings.usePaypal && (
+                        <div 
+                          className={`payment-option ${chosenPaymentMethod === 'PAYPAL' ? 'selected' : ''}`}
+                          onClick={() => setChosenPaymentMethod('PAYPAL')}
+                          style={{ border: chosenPaymentMethod === 'PAYPAL' ? '2px solid var(--color-accent)' : '1px solid var(--glass-border)', padding: '1rem', borderRadius: '8px', cursor: 'pointer', backgroundColor: chosenPaymentMethod === 'PAYPAL' ? 'var(--color-primary-light)' : 'var(--color-white)' }}
+                        >
+                          <strong>PayPal</strong>
+                          <p className="text-small text-muted" style={{ fontSize: '0.8rem', marginTop: '0.25rem' }}>Для оплати в валюті з-за кордону</p>
+                        </div>
+                      )}
+                    </div>
 
                     {/* Payment option: IBAN */}
-                    {successfulBooking.paymentMethod === 'IBAN' && (
+                    {chosenPaymentMethod === 'IBAN' && paymentSettings.useIban && (
                       <div className="iban-payment-box">
-                        <h4>Реквізити ФОП для оплати (IBAN)</h4>
+                        <h4 className="text-center mb-4" style={{ fontFamily: 'var(--font-sans)', fontWeight: 'bold' }}>Реквізити ФОП для оплати (IBAN)</h4>
                         <table className="iban-table">
                           <tbody>
                             <tr>
@@ -697,7 +782,7 @@ export default function Home() {
                             </tr>
                             <tr>
                               <td>Призначення:</td>
-                              <td>Оплата за психологічні послуги за записом від {successfulBooking.date}</td>
+                              <td>Оплата за психологічні послуги ({successfulBooking.service?.name})</td>
                             </tr>
                           </tbody>
                         </table>
@@ -708,7 +793,7 @@ export default function Home() {
                     )}
 
                     {/* Payment option: Monobank */}
-                    {successfulBooking.paymentMethod === 'MONO' && (
+                    {chosenPaymentMethod === 'MONO' && paymentSettings.useMono && (
                       <div className="mono-payment-box text-center">
                         <h4>Оплата онлайн через Monobank</h4>
                         <p>Клацніть кнопку нижче, щоб перейти на офіційну сторінку оплати карткою або через Apple Pay / Google Pay / Monopay.</p>
@@ -724,7 +809,7 @@ export default function Home() {
                     )}
 
                     {/* Payment option: PayPal */}
-                    {successfulBooking.paymentMethod === 'PAYPAL' && (
+                    {chosenPaymentMethod === 'PAYPAL' && paymentSettings.usePaypal && (
                       <div className="paypal-payment-box text-center">
                         <h4>Оплата через PayPal</h4>
                         <p>Ви можете сплатити сесію за кордону за допомогою PayPal. Надішліть платіж на електронну адресу або перейдіть за посиланням PayPal.Me.</p>

@@ -31,6 +31,7 @@ export async function POST(request) {
             phone: profile.phone,
             whatsapp: profile.whatsapp,
             facebook: profile.facebook,
+            calendlyLink: profile.calendlyLink || '',
           },
         });
       }
@@ -77,6 +78,7 @@ export async function POST(request) {
             description: s.description || '',
             duration: parseInt(s.duration) || 50,
             priceUah: parseInt(s.priceUah) || 0,
+            calendlyLink: s.calendlyLink || '',
           };
 
           if (s.id && currentServices.some(curr => curr.id === s.id)) {
