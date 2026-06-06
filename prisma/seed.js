@@ -58,21 +58,21 @@ async function main() {
       description: 'Індивідуальна психологічна консультація для дорослих та підлітків. Робота з тривожністю, особистими кризами, адаптацією, конфліктами та сімейними проблемами.',
       duration: 50,
       priceUah: 1200,
-      calendlyLink: 'https://calendly.com/tetianahaharina/individual-session',
+      calendlyLink: '',
     },
     {
       name: 'Консультація з дитячо-батьківських стосунків',
       description: 'Робота з батьками щодо поведінки дітей, вікових криз, налагодження емоційного контакту, підтримки підлітків та вирішення конфліктів.',
       duration: 60,
       priceUah: 1500,
-      calendlyLink: 'https://calendly.com/tetianahaharina/parent-child-session',
+      calendlyLink: '',
     },
     {
       name: 'Інтервізійна зустріч',
       description: 'Професійна підтримка для практикуючих психологів. Розбір складних кейсів, аналіз терапевтичного процесу, профілактика професійного вигорання.',
       duration: 50,
       priceUah: 1000,
-      calendlyLink: 'https://calendly.com/tetianahaharina/intervision-session',
+      calendlyLink: '',
     }
   ];
 
