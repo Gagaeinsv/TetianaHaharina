@@ -2,12 +2,94 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Modal from '@/components/Modal';
 import BookingWidget from '@/components/BookingWidget';
 import { getFallbackPayload } from '@/lib/defaultData';
 import { getTelegramUrl, getViberUrl, getWhatsappUrl } from '@/lib/scheduleUtils';
 
 const SPEC_ICONS = ['👨‍👩‍👧', '🧭', '🤍', '🌸', '🤝', '🛡️', '🌍', '🏳️‍🌈'];
+
+const FORMAT_FINDER_ITEMS = [
+  {
+    id: 'personal',
+    icon: '🧭',
+    label: 'Особистий запит і тривога',
+    situation: 'Тривога, емоційне вигорання, адаптація в новій країні або складні стосунки',
+    recommendation: 'Індивідуальна психологічна сесія',
+    duration: '50 хв • Онлайн',
+    description:
+      'Безпечний простір 1-на-1, де ми розберемо ваш стан без тиску та сформуємо стійкі внутрішні опори.',
+    matchCategory: 'INDIVIDUAL',
+    matchKeyword: 'індивід',
+  },
+  {
+    id: 'family',
+    icon: '👨‍👩‍👧',
+    label: 'Дитина або криза в родині',
+    situation: 'Труднощі у стосунках із дитиною, конфлікти в сім’ї або батьківське виснаження',
+    recommendation: 'Консультація з дитячо-батьківських стосунків',
+    duration: '60 хв • Онлайн',
+    description:
+      'Поглиблена розмова про вікові кризи, поведінку дитини та повернення взаєморозуміння без почуття провини.',
+    matchCategory: 'FAMILY',
+    matchKeyword: 'дитяч',
+  },
+  {
+    id: 'teen',
+    icon: '🌱',
+    label: 'Підтримка для підлітка (12+)',
+    situation: 'Самооцінка, тривожність, емоційні гойдалки, адаптація чи труднощі в школі',
+    recommendation: 'Дитячо-батьківська та підліткова підтримка',
+    duration: '50–60 хв • Онлайн',
+    description:
+      'Делікатна робота з підлітком (за згодою батьків) та формування довірливого контакту в родині.',
+    matchCategory: 'FAMILY',
+    matchKeyword: 'дитяч',
+  },
+  {
+    id: 'colleague',
+    icon: '🤝',
+    label: 'Для практикуючого психолога',
+    situation: 'Складний клієнтський кейс, професійне вигорання або пошук колегіальної опори',
+    recommendation: 'Інтервізійна зустріч для колег',
+    duration: '50 хв • Онлайн',
+    description:
+      'Професійний колегіальний розбір кейсів у підтримуючому полі з інтервізоркою та координаторкою ПЦ «Перспектива».',
+    matchCategory: 'SUPERVISION',
+    matchKeyword: 'інтервіз',
+  },
+];
+
+const CLIENT_REVIEWS = [
+  {
+    id: 'rev-1',
+    tag: 'Індивідуальна терапія • Перший досвід роботи з психологом',
+    source: 'Соціальний проєкт психологічної підтримки',
+    quote:
+      '«Це була моя перша праця з психологом, маю велике задоволення від роботи з Тетяною! Вона допомогла мені почати роботу над собою, дала зрозуміти, на які аспекти життя я маю звернути більше уваги, щоб допомогти сама собі. Дуже раджу всім не боятися і працювати з психологом — з Тетяною цей досвід був максимально дбайливим.»',
+    imgPath: '/cert1.jpg',
+    imgTitle: 'Оригінал відгуку клієнтки (соціальний проєкт)',
+  },
+  {
+    id: 'rev-2',
+    tag: 'Індивідуальна консультація • Пошук внутрішніх ресурсів',
+    source: 'Соціальний проєкт психологічної підтримки',
+    quote:
+      '«Чудовий психолог, який глибоко знає свою справу. Вміє підібрати потрібні ключі та професійно знаходить індивідуальний підхід. Велика вдячність за час, чуйність і кваліфіковану допомогу!»',
+    imgPath: '/cert2.jpg',
+    imgTitle: 'Оригінал відгуку клієнта (соціальний проєкт)',
+  },
+  {
+    id: 'rev-3',
+    tag: 'Дитячо-батьківські стосунки • Сімейна підтримка',
+    source: 'Приватна онлайн-консультація',
+    quote:
+      '«Звернулися через постійну напругу у спілкуванні з дитиною-підлітком та власне батьківське виснаження. Тетяна допомогла побачити потреби дитини без почуття провини, знизити градус конфліктів у родині та повернути теплий діалог.»',
+    imgPath: null,
+    imgTitle: '',
+  },
+];
 
 const FAQ_ITEMS = [
   {
@@ -55,9 +137,11 @@ export default function HomePage() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedServiceId, setSelectedServiceId] = useState(null);
+  const [activeFinderIdx, setActiveFinderIdx] = useState(0);
   const [activeFaq, setActiveFaq] = useState(0);
   const [openAnxiety, setOpenAnxiety] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [quickContactOpen, setQuickContactOpen] = useState(false);
 
   const [legalModal, setLegalModal] = useState({ isOpen: false, title: '', content: '' });
   const [certModal, setCertModal] = useState({ isOpen: false, imgPath: '', title: '' });
@@ -117,6 +201,19 @@ export default function HomePage() {
   const { profile, services = [] } = data;
   const paymentSettings = profile?.paymentSettings;
 
+  const getMatchedService = (finderItem) => {
+    if (!services.length) return null;
+    return (
+      services.find(
+        (s) => s.category?.toUpperCase() === finderItem.matchCategory
+      ) ||
+      services.find((s) =>
+        s.name.toLowerCase().includes(finderItem.matchKeyword)
+      ) ||
+      services[0]
+    );
+  };
+
   return (
     <div className="gagarina-site">
       {/* Sticky Glass Header */}
@@ -132,6 +229,7 @@ export default function HomePage() {
             <a href="#specializations" onClick={() => setMobileMenuOpen(false)}>Напрямки</a>
             <a href="#services" onClick={() => setMobileMenuOpen(false)}>Послуги</a>
             <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)}>Як проходить</a>
+            <a href="#reviews" onClick={() => setMobileMenuOpen(false)}>Відгуки</a>
             <a href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
             <div className="g-nav-actions">
               <Link href="/cabinet" className="btn btn-secondary g-nav-cab" onClick={() => setMobileMenuOpen(false)}>
@@ -189,7 +287,14 @@ export default function HomePage() {
 
           <div className="g-hero-media">
             <div className="g-arch-frame">
-              <img src="/avatar.jpg" alt={profile.name} className="g-hero-portrait" />
+              <Image
+                src="/avatar.jpg"
+                alt={profile.name}
+                width={800}
+                height={1000}
+                priority
+                className="g-hero-portrait"
+              />
             </div>
             <div className="g-float-card">
               <div className="g-float-num">{profile.experience} років</div>
@@ -237,55 +342,44 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* About Section with Photo Collage & Certificates */}
+      {/* About Section with Editorial Portrait Showcase & Professional Standards */}
       <section id="about" className="g-about">
         <div className="container g-about-grid">
           <div className="g-about-media">
-            <div className="g-collage">
-              <div className="g-col-photo tall">
-                <img src="/avatar5.jpg" alt={`${profile.name} — портрет`} />
-              </div>
-              <div className="g-col-stack">
-                <div className="g-col-photo">
-                  <img src="/avatar4.jpg" alt="Консультаційна практика" />
+            <div className="g-about-showcase">
+              <div className="g-portrait-main">
+                <Image
+                  src="/avatar4.jpg"
+                  alt={`${profile.name} — практикуючий психолог`}
+                  width={800}
+                  height={600}
+                />
+                <div className="g-portrait-caption">
+                  <span>{profile.name}</span>
+                  <small>Практикуючий психолог • Інтервізорка</small>
                 </div>
-                <div className="g-col-photo">
-                  <img src="/avatar2.jpg" alt="Атмосфера підтримки" />
-                </div>
               </div>
-            </div>
 
-            <div className="g-certs-strip">
-              <span className="g-certs-label">Дипломи та сертифікати (натисніть для збільшення):</span>
-              <div className="g-certs-row">
-                <button
-                  type="button"
-                  className="g-cert-thumb"
-                  onClick={() =>
-                    setCertModal({
-                      isOpen: true,
-                      imgPath: '/cert1.jpg',
-                      title: 'Сертифікат підвищення кваліфікації',
-                    })
-                  }
-                >
-                  <img src="/cert1.jpg" alt="Сертифікат 1" />
-                  <span>🔎 Переглянути</span>
-                </button>
-                <button
-                  type="button"
-                  className="g-cert-thumb"
-                  onClick={() =>
-                    setCertModal({
-                      isOpen: true,
-                      imgPath: '/cert2.jpg',
-                      title: 'Спеціалізована підготовка психолога',
-                    })
-                  }
-                >
-                  <img src="/cert2.jpg" alt="Сертифікат 2" />
-                  <span>🔎 Переглянути</span>
-                </button>
+              <div className="g-portrait-sub-row">
+                <div className="g-portrait-secondary">
+                  <Image
+                    src="/avatar5.jpg"
+                    alt={`${profile.name} — атмосфера довіри`}
+                    width={600}
+                    height={700}
+                  />
+                </div>
+
+                <div className="g-standards-card">
+                  <span className="g-std-badge">Етика та супервізія</span>
+                  <h4>Професійні стандарти</h4>
+                  <ul className="g-std-list">
+                    <li>✦ Понад 2000+ годин практики</li>
+                    <li>✦ Координаторка ПЦ «Перспектива»</li>
+                    <li>✦ Волонтерка ГО «Разом» та ГО «Ранні пташки»</li>
+                    <li>✦ Регулярна супервізія та інтервізія</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -360,6 +454,64 @@ export default function HomePage() {
             <p>Прозора вартість, чіткі межі та вибір зручного часу в онлайн-календарі.</p>
           </div>
 
+          {/* Interactive Format Finder */}
+          <div className="g-finder-box">
+            <div className="g-finder-head">
+              <span className="g-sec-badge">Швидкий підбір за 10 секунд</span>
+              <h3>Не впевнені, який формат обрати? Оберіть вашу ситуацію</h3>
+            </div>
+
+            <div className="g-finder-tabs" role="tablist" aria-label="Підбір формату консультації">
+              {FORMAT_FINDER_ITEMS.map((item, idx) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeFinderIdx === idx}
+                  className={`g-finder-tab ${activeFinderIdx === idx ? 'active' : ''}`}
+                  onClick={() => setActiveFinderIdx(idx)}
+                >
+                  <span className="g-finder-tab-icon">{item.icon}</span>
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </div>
+
+            {(() => {
+              const activeItem = FORMAT_FINDER_ITEMS[activeFinderIdx] || FORMAT_FINDER_ITEMS[0];
+              const matchedService = getMatchedService(activeItem);
+              return (
+                <div className="g-finder-result">
+                  <div className="g-finder-result-info">
+                    <span className="g-finder-rec-pill">
+                      Рекомендований формат • {activeItem.duration}
+                    </span>
+                    <h4>{matchedService ? matchedService.name : activeItem.recommendation}</h4>
+                    <p className="g-finder-situation">
+                      <strong>Ваш запит:</strong> {activeItem.situation}
+                    </p>
+                    <p className="g-finder-desc">{activeItem.description}</p>
+                  </div>
+                  <div className="g-finder-result-cta">
+                    {matchedService && (
+                      <div className="g-finder-price">
+                        <small>Вартість сесії</small>
+                        <strong>{matchedService.priceUah} грн</strong>
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => scrollToBooking(matchedService?.id)}
+                      className="btn btn-primary"
+                    >
+                      Записатися на цей формат →
+                    </button>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
           <div className="g-services-grid">
             {services.map((s) => (
               <div key={s.id} className="g-service-card">
@@ -428,7 +580,7 @@ export default function HomePage() {
                 Багато клієнтів сумніваються, про що говорити і як усе відбуватиметься. Натисніть на питання, щоб дізнатися деталі.
               </p>
               <div className="g-anxiety-photo-wrap">
-                <img src="/avatar3.jpg" alt={profile.name} />
+                <Image src="/avatar5.jpg" alt={profile.name} width={480} height={360} />
               </div>
             </div>
 
@@ -449,6 +601,88 @@ export default function HomePage() {
                   {openAnxiety === idx && <p className="g-accordion-body">{item.a}</p>}
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Client Reviews Section */}
+      <section id="reviews" className="g-reviews-sec">
+        <div className="container">
+          <div className="g-sec-header center">
+            <span className="g-sec-badge">Відгуки клієнтів</span>
+            <h2>Живі історії та досвід роботи</h2>
+            <p>
+              Зворотний зв’язок від клієнтів після індивідуальних консультацій, сімейної підтримки та участі у соціальних проєктах.
+            </p>
+          </div>
+
+          <div className="g-reviews-grid">
+            {CLIENT_REVIEWS.map((rev) => (
+              <article key={rev.id} className="g-review-card">
+                <div className="g-review-top">
+                  <span className="g-review-tag">{rev.tag}</span>
+                </div>
+                <blockquote className="g-review-quote">{rev.quote}</blockquote>
+                <div className="g-review-foot">
+                  <span className="g-review-source">{rev.source}</span>
+                  {rev.imgPath && (
+                    <button
+                      type="button"
+                      className="g-review-proof-btn"
+                      onClick={() =>
+                        setCertModal({
+                          isOpen: true,
+                          imgPath: rev.imgPath,
+                          title: rev.imgTitle,
+                        })
+                      }
+                    >
+                      🔎 Переглянути оригінал відгуку
+                    </button>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="g-originals-strip">
+            <div className="g-originals-info">
+              <span className="g-sec-badge">Перевірені відгуки</span>
+              <h3>Оригінали публікацій із соціального проєкту</h3>
+              <p>
+                Натисніть на будь-яку картку, щоб відкрити збережений оригінал відгуку у повному розмірі.
+              </p>
+            </div>
+            <div className="g-originals-thumbs">
+              <button
+                type="button"
+                className="g-orig-thumb"
+                onClick={() =>
+                  setCertModal({
+                    isOpen: true,
+                    imgPath: '/cert1.jpg',
+                    title: 'Відгук клієнтки — соціальний проєкт «Разом»',
+                  })
+                }
+              >
+                <Image src="/cert1.jpg" alt="Оригінал відгуку клієнтки №1" width={600} height={450} />
+                <span>🔎 Переглянути оригінал №1</span>
+              </button>
+              <button
+                type="button"
+                className="g-orig-thumb"
+                onClick={() =>
+                  setCertModal({
+                    isOpen: true,
+                    imgPath: '/cert2.jpg',
+                    title: 'Відгук клієнта — соціальний проєкт',
+                  })
+                }
+              >
+                <Image src="/cert2.jpg" alt="Оригінал відгуку клієнта №2" width={600} height={450} />
+                <span>🔎 Переглянути оригінал №2</span>
+              </button>
             </div>
           </div>
         </div>
@@ -576,6 +810,61 @@ export default function HomePage() {
         </a>
       </div>
 
+      {/* Floating Quick-Contact Messenger Widget */}
+      <div className={`g-quick-contact ${quickContactOpen ? 'open' : ''}`}>
+        {quickContactOpen && (
+          <div className="g-qc-popover" role="region" aria-label="Швидкий зв’язок">
+            <div className="g-qc-head">
+              <strong>Швидке запитання психологині</strong>
+              <button
+                type="button"
+                className="g-qc-close"
+                onClick={() => setQuickContactOpen(false)}
+                aria-label="Закрити"
+              >
+                ×
+              </button>
+            </div>
+            <p className="g-qc-sub">Оберіть зручний месенджер — відповім між консультаціями.</p>
+            <div className="g-qc-links">
+              <a
+                href={getTelegramUrl(profile.telegram || profile.phone)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="g-qc-link tg"
+              >
+                ✈️ Написати в Telegram
+              </a>
+              <a
+                href={getViberUrl(profile.phone)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="g-qc-link vb"
+              >
+                📞 Написати у Viber
+              </a>
+              <a
+                href={getWhatsappUrl(profile.whatsapp || profile.phone)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="g-qc-link wa"
+              >
+                🟢 Написати у WhatsApp
+              </a>
+            </div>
+          </div>
+        )}
+        <button
+          type="button"
+          className="g-qc-trigger"
+          onClick={() => setQuickContactOpen((prev) => !prev)}
+          aria-expanded={quickContactOpen}
+        >
+          <span>💬</span>
+          <span className="g-qc-label">Швидкий зв’язок</span>
+        </button>
+      </div>
+
       {/* Legal Modal */}
       <Modal
         isOpen={legalModal.isOpen}
@@ -585,7 +874,7 @@ export default function HomePage() {
         <div className="legal-content-pre">{legalModal.content}</div>
       </Modal>
 
-      {/* Certificate Modal */}
+      {/* Review Original Image Lightbox Modal */}
       <Modal
         isOpen={certModal.isOpen}
         onClose={() => setCertModal({ ...certModal, isOpen: false })}
@@ -593,7 +882,13 @@ export default function HomePage() {
       >
         <div className="cert-modal-body">
           {certModal.imgPath && (
-            <img src={certModal.imgPath} alt={certModal.title} className="cert-large-img" />
+            <Image
+              src={certModal.imgPath}
+              alt={certModal.title}
+              width={900}
+              height={900}
+              className="cert-large-img"
+            />
           )}
         </div>
       </Modal>

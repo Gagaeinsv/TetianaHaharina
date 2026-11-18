@@ -470,7 +470,7 @@ hr {
 }
 
 /* ==========================================================================
-   ABOUT & CERTIFICATES
+   ABOUT & PROFESSIONAL STANDARDS
    ========================================================================== */
 .g-about {
   padding: 5.5rem 0;
@@ -483,86 +483,113 @@ hr {
   align-items: start;
 }
 
-.g-collage {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 1rem;
-}
-
-.g-col-stack {
+.g-about-showcase {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.15rem;
 }
 
-.g-col-photo {
-  border-radius: var(--radius-md);
+.g-portrait-main {
+  position: relative;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--color-bg-alt);
   aspect-ratio: 4 / 3;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-soft);
+  border: 4px solid var(--color-surface);
 }
 
-.g-col-photo.tall {
-  aspect-ratio: auto;
-  height: 100%;
-  min-height: 340px;
-}
-
-.g-col-photo img {
+.g-portrait-main img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center 15%;
   display: block;
 }
 
-.g-certs-strip {
-  margin-top: 1.5rem;
+.g-portrait-caption {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  background: rgba(29, 59, 52, 0.88);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.g-portrait-caption span {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.g-portrait-caption small {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.g-portrait-sub-row {
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.g-portrait-secondary {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-bg-alt);
+  box-shadow: var(--shadow-card);
+  border: 3px solid var(--color-surface);
+  min-height: 210px;
+}
+
+.g-portrait-secondary img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+}
+
+.g-standards-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 1.15rem;
+  padding: 1.25rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.g-certs-label {
-  display: block;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--color-muted);
+.g-std-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 0.35rem;
+}
+
+.g-standards-card h4 {
+  font-size: 1.12rem;
   margin-bottom: 0.75rem;
 }
 
-.g-certs-row {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
-}
-
-.g-cert-thumb {
-  position: relative;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  aspect-ratio: 4 / 3;
-  border: 1px solid var(--color-border);
-}
-
-.g-cert-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.g-cert-thumb span {
-  position: absolute;
-  inset: auto 0 0 0;
-  background: rgba(29, 59, 52, 0.85);
-  color: #fff;
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 0.35rem;
-  text-align: center;
+.g-std-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  color: var(--color-muted);
 }
 
 .g-about-body h2 {
@@ -687,10 +714,132 @@ hr {
 }
 
 /* ==========================================================================
-   SERVICES
+   SERVICES & INTERACTIVE FORMAT FINDER
    ========================================================================== */
 .g-services {
   padding: 5.5rem 0;
+}
+
+.g-finder-box {
+  background: linear-gradient(135deg, var(--color-sage-mist) 0%, var(--color-surface) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.g-finder-head {
+  margin-bottom: 1.25rem;
+}
+
+.g-finder-head h3 {
+  font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+}
+
+.g-finder-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.g-finder-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-align: left;
+  transition: all var(--transition);
+}
+
+.g-finder-tab:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.g-finder-tab.active {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 20px rgba(29, 59, 52, 0.2);
+}
+
+.g-finder-tab-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.g-finder-result {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.g-finder-result-info {
+  flex: 1;
+}
+
+.g-finder-rec-pill {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--color-success);
+  background: #e4f3eb;
+  padding: 0.28rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: 0.5rem;
+}
+
+.g-finder-result-info h4 {
+  font-size: 1.3rem;
+  margin-bottom: 0.45rem;
+}
+
+.g-finder-situation {
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  margin-bottom: 0.35rem;
+}
+
+.g-finder-desc {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.g-finder-result-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.g-finder-price {
+  text-align: right;
+}
+
+.g-finder-price small {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+.g-finder-price strong {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  color: var(--color-primary);
 }
 
 .g-services-grid {
@@ -707,6 +856,12 @@ hr {
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-card);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.g-service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft);
 }
 
 .g-srv-meta-top {
@@ -868,6 +1023,148 @@ hr {
 }
 
 /* ==========================================================================
+   CLIENT REVIEWS SECTION
+   ========================================================================== */
+.g-reviews-sec {
+  padding: 5.5rem 0;
+  background: var(--color-bg);
+}
+
+.g-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.g-review-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.g-review-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft);
+}
+
+.g-review-top {
+  margin-bottom: 1rem;
+}
+
+.g-review-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  background: #fdf2ee;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+}
+
+.g-review-quote {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.72;
+  color: var(--color-text);
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+}
+
+.g-review-foot {
+  border-top: 1px solid var(--color-border);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.g-review-source {
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.g-review-proof-btn {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.g-review-proof-btn:hover {
+  color: var(--color-accent);
+}
+
+.g-originals-strip {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 2rem;
+  align-items: center;
+  box-shadow: var(--shadow-card);
+}
+
+.g-originals-info h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.6rem;
+}
+
+.g-originals-info p {
+  font-size: 0.94rem;
+  color: var(--color-muted);
+}
+
+.g-originals-thumbs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.g-orig-thumb {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1.5px solid var(--color-border);
+  aspect-ratio: 4 / 3;
+  background: var(--color-bg-alt);
+  transition: transform var(--transition), border-color var(--transition);
+}
+
+.g-orig-thumb:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+.g-orig-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.g-orig-thumb span {
+  position: absolute;
+  inset: auto 0 0 0;
+  background: rgba(29, 59, 52, 0.9);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.45rem 0.6rem;
+  text-align: center;
+}
+
+/* ==========================================================================
    BOOKING SECTION
    ========================================================================== */
 .g-booking-sec {
@@ -1021,6 +1318,93 @@ hr {
 }
 
 /* ==========================================================================
+   FLOATING QUICK-CONTACT MESSENGER WIDGET
+   ========================================================================== */
+.g-quick-contact {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 910;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.g-qc-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: var(--color-primary);
+  color: #ffffff;
+  padding: 0.85rem 1.3rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 12px 28px rgba(29, 59, 52, 0.25);
+  transition: transform var(--transition), background-color var(--transition);
+}
+
+.g-qc-trigger:hover {
+  transform: translateY(-2px);
+  background: var(--color-primary-hover);
+}
+
+.g-qc-popover {
+  width: 290px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.15rem;
+  box-shadow: 0 18px 42px rgba(29, 59, 52, 0.16);
+}
+
+.g-qc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+  color: var(--color-primary);
+}
+
+.g-qc-close {
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--color-muted);
+  padding: 0.1rem 0.35rem;
+}
+
+.g-qc-sub {
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  margin-bottom: 0.85rem;
+}
+
+.g-qc-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.g-qc-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.g-qc-link:hover {
+  background: var(--color-sage-mist);
+  border-color: var(--color-primary);
+}
+
+/* ==========================================================================
    MODAL
    ========================================================================== */
 .modal-overlay {
@@ -1084,6 +1468,8 @@ hr {
 }
 
 .cert-large-img {
+  width: auto;
+  height: auto;
   max-width: 100%;
   max-height: 70vh;
   object-fit: contain;
@@ -2708,6 +3094,7 @@ hr {
   .g-hero-grid,
   .g-about-grid,
   .g-anxiety-box,
+  .g-originals-strip,
   .bw-datetime-grid,
   .adm-sched-split {
     grid-template-columns: 1fr;
@@ -2716,14 +3103,30 @@ hr {
 
   .g-principles-grid,
   .g-specs-grid,
-  .g-timeline {
+  .g-timeline,
+  .g-finder-tabs {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .g-services-grid,
+  .g-reviews-grid,
   .bw-services-list,
   .bw-pay-options {
     grid-template-columns: 1fr;
+  }
+
+  .g-finder-result {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .g-finder-result-cta {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .g-finder-price {
+    text-align: left;
   }
 
   .adm-layout {
@@ -2820,11 +3223,34 @@ hr {
   .g-principles-grid,
   .g-specs-grid,
   .g-timeline,
-  .g-collage,
+  .g-portrait-sub-row,
+  .g-finder-tabs,
+  .g-originals-thumbs,
   .bw-inputs-grid,
   .adm-form-grid,
   .adm-bk-edit-grid {
     grid-template-columns: 1fr;
+  }
+
+  .g-finder-box {
+    padding: 1.35rem;
+  }
+
+  .g-quick-contact {
+    right: 1rem;
+    bottom: 5.25rem;
+  }
+
+  .g-qc-label {
+    display: none;
+  }
+
+  .g-qc-trigger {
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    justify-content: center;
+    font-size: 1.3rem;
   }
 
   .g-footer-grid {
