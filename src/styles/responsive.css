@@ -1,0 +1,452 @@
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .g-burger {
+    position: relative;
+    z-index: 960;
+    display: flex;
+  }
+
+  .g-nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background: #FAF7F2;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 6rem 1.5rem 2.5rem;
+    gap: 1.15rem;
+    overflow-y: auto;
+    z-index: 920;
+  }
+
+  .g-nav.open {
+    display: flex;
+  }
+
+  .g-nav > a {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .g-nav-actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 280px;
+    margin-left: 0;
+    margin-top: 0.75rem;
+  }
+
+  .g-nav-actions .btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .g-hero-grid,
+  .g-about-grid,
+  .g-empathy-grid {
+    gap: 2rem;
+  }
+
+  .g-originals-strip,
+  .bw-datetime-grid,
+  .adm-sched-split {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .g-principles-grid,
+  .g-specs-grid,
+  .g-timeline,
+  .g-finder-tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .g-services-grid,
+  .g-reviews-grid,
+  .bw-services-list,
+  .bw-pay-options {
+    grid-template-columns: 1fr;
+  }
+
+  .g-finder-result {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .g-finder-result-cta {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .g-finder-price {
+    text-align: left;
+  }
+
+  .adm-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .adm-sidebar {
+    position: static;
+    height: auto;
+  }
+
+  .adm-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .adm-nav button {
+    width: auto;
+  }
+
+  .adm-bk-edit-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .adm-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .gagarina-site {
+    padding-bottom: 84px;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .g-hero-grid,
+  .g-about-grid,
+  .g-empathy-grid {
+    grid-template-columns: 1fr;
+    gap: 1.35rem;
+  }
+
+  .g-hero-window,
+  .g-about-window,
+  .g-empathy-window {
+    display: none;
+  }
+
+  /* True aspect-ratio portrait stage for mobile phones: top 72% stays crisp over face */
+  .photo-stage.photo-right > .photo-stage-bg,
+  .photo-stage.photo-left > .photo-stage-bg {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: none;
+    aspect-ratio: 4 / 4.2;
+    max-height: 440px;
+    margin-bottom: -68px;
+    -webkit-mask-image: linear-gradient(to bottom, #000000 0%, #000000 72%, rgba(0, 0, 0, 0.45) 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000000 0%, #000000 72%, rgba(0, 0, 0, 0.45) 88%, transparent 100%);
+  }
+
+  .g-about.dark-studio.photo-left > .photo-stage-bg {
+    aspect-ratio: 4 / 4.5;
+    max-height: 460px;
+    margin-bottom: -64px;
+  }
+
+  .g-empathy-sec.photo-left > .photo-stage-bg {
+    aspect-ratio: 4 / 4.3;
+    max-height: 460px;
+    margin-bottom: -65px;
+  }
+
+  .photo-stage-img.hero-pos {
+    object-position: 50% top;
+  }
+
+  .photo-stage-img.studio-pos,
+  .photo-stage-img.empathy-pos {
+    object-position: center top;
+  }
+
+  .veil-alabaster-right {
+    background: linear-gradient(180deg, transparent 0%, transparent 62%, rgba(250, 247, 242, 0.72) 86%, rgba(250, 247, 242, 0.98) 100%);
+  }
+
+  .veil-dark-left {
+    background: linear-gradient(180deg, transparent 0%, transparent 62%, rgba(28, 34, 32, 0.72) 86%, rgba(28, 34, 32, 0.98) 100%);
+  }
+
+  .veil-sage-left {
+    background: linear-gradient(180deg, transparent 0%, transparent 62%, rgba(230, 239, 234, 0.74) 86%, rgba(230, 239, 234, 0.98) 100%);
+  }
+
+  .g-hero,
+  .g-about.dark-studio,
+  .g-empathy-sec {
+    min-height: auto;
+    display: block;
+    padding: 0 0 3.25rem;
+  }
+
+  .g-specs,
+  .g-services,
+  .g-process,
+  .g-reviews-sec,
+  .g-booking-sec,
+  .g-faq-sec {
+    padding: 3.5rem 0;
+  }
+
+  .g-sec-header {
+    margin-bottom: 2rem;
+  }
+
+  .g-hero-highlight {
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.85rem;
+  }
+
+  .g-std-list {
+    grid-template-columns: 1fr;
+  }
+
+  .g-hero-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .g-hero-btns .btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .g-trust-pills span {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.78rem;
+  }
+
+  .g-principles-grid,
+  .g-specs-grid,
+  .g-timeline,
+  .g-finder-tabs,
+  .g-originals-thumbs,
+  .bw-inputs-grid,
+  .adm-form-grid,
+  .adm-bk-edit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .g-finder-box {
+    padding: 1.25rem;
+  }
+
+  .g-quick-contact {
+    right: 1rem;
+    bottom: 5.5rem;
+  }
+
+  .g-qc-popover {
+    width: min(290px, calc(100vw - 2rem));
+  }
+
+  .g-qc-label {
+    display: none;
+  }
+
+  .g-qc-trigger {
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    justify-content: center;
+    font-size: 1.3rem;
+  }
+
+  .g-footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .g-footer-col, .g-footer-link {
+    align-items: center;
+    text-align: center;
+  }
+
+  .g-footer-socials {
+    justify-content: center;
+  }
+
+  /* Mobile-First Booking Calendar & Inputs */
+  .bw-mode-switcher {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    border-radius: var(--radius-md);
+  }
+
+  .g-booking-shell {
+    padding: 1rem;
+  }
+
+  .mc-calendar,
+  .bw-slots-pane,
+  .pay-details-box,
+  .bw-submit-bar {
+    padding: 0.95rem;
+  }
+
+  .mc-grid {
+    gap: 0.22rem;
+  }
+
+  .mc-cell {
+    min-height: 40px;
+    font-size: 0.84rem;
+    border-radius: 8px;
+  }
+
+  .bw-slots-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  input,
+  select,
+  textarea,
+  .adm-field input,
+  .adm-field select,
+  .adm-field textarea,
+  .adm-search-input {
+    font-size: 16px !important;
+  }
+
+  /* Client Cabinet Mobile (/cabinet) */
+  .cab-header-inner {
+    flex-wrap: wrap;
+  }
+
+  .cab-main {
+    padding: 1.5rem 1rem 4rem;
+  }
+
+  .cab-lookup-card, .cab-session-card {
+    padding: 1.15rem;
+  }
+
+  .cab-lookup-form {
+    flex-direction: column;
+  }
+
+  .cab-meeting-ready .btn {
+    width: 100%;
+  }
+
+  .cab-card-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cab-card-actions .btn {
+    width: 100%;
+  }
+
+  .cab-cancel-btn {
+    margin-left: 0;
+    text-align: center;
+    padding: 0.4rem 0;
+  }
+
+  /* Admin CRM Mobile (/admin) */
+  .adm-main {
+    padding: 1.15rem 1rem 3rem;
+  }
+
+  .adm-sidebar {
+    padding: 1.15rem 1rem;
+  }
+
+  .adm-nav {
+    gap: 0.35rem;
+  }
+
+  .adm-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+
+  .adm-metric-card {
+    padding: 0.9rem;
+  }
+
+  .adm-crm-right, .adm-search-input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .adm-bk-selects {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .adm-bk-foot {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .adm-card, .adm-manual-box, .adm-booking-card {
+    padding: 1.1rem;
+  }
+
+  .adm-day-slots-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .g-sticky-cta {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(250, 247, 242, 0.96);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--color-border);
+    padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    z-index: 880;
+  }
+}
+
+@media (max-width: 480px) {
+  .bw-messenger-row {
+    grid-template-columns: 1fr;
+  }
+
+  .bw-summary-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .bw-action-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .bw-action-row .btn {
+    width: 100%;
+  }
+
+  .mc-cell {
+    min-height: 36px;
+    font-size: 0.8rem;
+  }
+}
