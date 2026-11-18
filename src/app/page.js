@@ -263,7 +263,7 @@ export default function HomePage() {
             alt=""
             fill
             priority
-            sizes="(max-width: 1024px) 100vw, 60vw"
+            sizes="(max-width: 1024px) 100vw, 52vw"
             className="photo-stage-img hero-pos"
           />
           <div className="photo-stage-veil veil-alabaster-right" />
@@ -289,6 +289,13 @@ export default function HomePage() {
               </Link>
             </div>
 
+            <div className="g-hero-highlight">
+              <div className="g-float-num">{profile.experience} років</div>
+              <div className="g-float-text">
+                практики • волонтерка ГО «Разом» та ГО «Ранні пташки»
+              </div>
+            </div>
+
             <div className="g-trust-pills">
               <span>⚖️ Офіційно ФОП</span>
               <span>🔒 100% Конфіденційність</span>
@@ -297,14 +304,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="g-hero-window">
-            <div className="g-float-card">
-              <div className="g-float-num">{profile.experience} років</div>
-              <div className="g-float-text">
-                практики • волонтерка ГО «Разом» та ГО «Ранні пташки»
-              </div>
-            </div>
-          </div>
+          <div className="g-hero-window" aria-hidden="true" />
         </div>
       </section>
 
@@ -351,14 +351,28 @@ export default function HomePage() {
             src="/avatar4.jpg"
             alt=""
             fill
-            sizes="(max-width: 1024px) 100vw, 55vw"
+            sizes="(max-width: 1024px) 100vw, 46vw"
             className="photo-stage-img studio-pos"
           />
           <div className="photo-stage-veil veil-dark-left" />
         </div>
 
         <div className="container g-about-grid photo-stage-content">
-          <div className="g-about-window">
+          <div className="g-about-window" aria-hidden="true" />
+
+          <div className="g-about-body dark-surface">
+            <span className="g-sec-badge light">Про мене та досвід</span>
+            <h2>{profile.name}</h2>
+            <p className="g-about-sub light">{profile.title} — {profile.subtitle}</p>
+            <p className="g-about-bio light">{profile.bio}</p>
+
+            <div className="g-org-tags dark">
+              <span>ГО «Соціальний проєкт Разом»</span>
+              <span>ГО «Ранні пташки»</span>
+              <span>Гейткіпер</span>
+              <span>Координаторка ПЦ «Перспектива»</span>
+            </div>
+
             <div className="g-standards-card dark-glass">
               <span className="g-std-badge">Етика та супервізія</span>
               <h4>Професійні стандарти</h4>
@@ -368,20 +382,6 @@ export default function HomePage() {
                 <li>✦ Волонтерка ГО «Разом» та ГО «Ранні пташки»</li>
                 <li>✦ Регулярна супервізія та інтервізія</li>
               </ul>
-            </div>
-          </div>
-
-          <div className="g-about-body dark-surface">
-            <span className="g-sec-badge light">Про мене та досвід</span>
-            <h2>{profile.name}</h2>
-            <p className="g-about-sub light">{profile.title} — {profile.subtitle}</p>
-            <p className="g-about-bio light">{profile.bio}</p>
-
-            <div className="g-org-tags dark">
-              <span>ГО «Соціальний проєкт «Разом»»</span>
-              <span>ГО «Ранні пташки»</span>
-              <span>Гейткіпер</span>
-              <span>Координаторка ПЦ «Перспектива»</span>
             </div>
 
             <div className="g-facts-box dark-glass">
@@ -559,29 +559,35 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="g-anxiety-box photo-stage photo-left">
-            <div className="photo-stage-bg" aria-hidden="true">
-              <Image
-                src="/avatar5.jpg"
-                alt=""
-                fill
-                sizes="(max-width: 1024px) 100vw, 55vw"
-                className="photo-stage-img empathy-pos"
-              />
-              <div className="photo-stage-veil veil-sage-left" />
+        </div>
+      </section>
+
+      {/* Empathy & First-Session Reassurance (Full-Bleed Portrait Stage) */}
+      <section className="g-empathy-sec photo-stage photo-left">
+        <div className="photo-stage-bg" aria-hidden="true">
+          <Image
+            src="/avatar5.jpg"
+            alt=""
+            fill
+            sizes="(max-width: 1024px) 100vw, 46vw"
+            className="photo-stage-img empathy-pos"
+          />
+          <div className="photo-stage-veil veil-sage-left" />
+        </div>
+
+        <div className="container g-empathy-grid photo-stage-content">
+          <div className="g-empathy-window" aria-hidden="true" />
+
+          <div className="g-empathy-content">
+            <div className="g-empathy-header">
+              <span className="g-sec-badge">Підтримка перед стартом</span>
+              <h2>Це нормально — хвилюватися перед першою сесією</h2>
+              <p>
+                Багато клієнтів сумніваються, про що говорити і як усе відбуватиметься. Натисніть на питання, щоб дізнатися деталі.
+              </p>
             </div>
 
-            <div className="g-anxiety-intro photo-stage-content">
-              <div className="g-anxiety-glass-card">
-                <span className="g-sec-badge">Підтримка перед стартом</span>
-                <h3>Це нормально — хвилюватися перед першою сесією</h3>
-                <p>
-                  Багато клієнтів сумніваються, про що говорити і як усе відбуватиметься. Натисніть на питання, щоб дізнатися деталі.
-                </p>
-              </div>
-            </div>
-
-            <div className="g-anxiety-list photo-stage-content">
+            <div className="g-anxiety-list">
               {ANXIETY_ITEMS.map((item, idx) => (
                 <div
                   key={idx}

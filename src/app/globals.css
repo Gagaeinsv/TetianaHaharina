@@ -273,21 +273,23 @@ hr {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 58%;
+  width: 52%;
   z-index: 1;
   pointer-events: none;
 }
 
 .photo-stage.photo-right > .photo-stage-bg {
   right: 0;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.55) 26%, #000000 56%);
-  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.55) 26%, #000000 56%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.52) 20%, #000000 40%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.52) 20%, #000000 40%);
 }
 
 .photo-stage.photo-left > .photo-stage-bg {
   left: 0;
-  -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.55) 26%, #000000 56%);
-  mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.55) 26%, #000000 56%);
+  width: 46%;
+  max-width: 660px;
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.5) 22%, #000000 48%);
+  mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.5) 22%, #000000 48%);
 }
 
 .photo-stage-full {
@@ -305,15 +307,15 @@ hr {
 }
 
 .photo-stage-img.hero-pos {
-  object-position: 54% 14%;
+  object-position: 48% top;
 }
 
 .photo-stage-img.studio-pos {
-  object-position: center 10%;
+  object-position: center top;
 }
 
 .photo-stage-img.empathy-pos {
-  object-position: center 16%;
+  object-position: center top;
 }
 
 .photo-stage-veil {
@@ -325,20 +327,20 @@ hr {
 
 .veil-alabaster-right {
   background:
-    linear-gradient(90deg, rgba(250, 247, 242, 0.96) 0%, rgba(250, 247, 242, 0.72) 32%, rgba(250, 247, 242, 0.08) 70%, rgba(250, 247, 242, 0.04) 100%),
-    linear-gradient(180deg, rgba(250, 247, 242, 0.25) 0%, transparent 18%, transparent 82%, rgba(250, 247, 242, 0.85) 100%);
+    linear-gradient(90deg, rgba(250, 247, 242, 0.96) 0%, rgba(250, 247, 242, 0.42) 38%, transparent 56%, transparent 100%),
+    linear-gradient(180deg, rgba(250, 247, 242, 0.14) 0%, transparent 16%, transparent 86%, rgba(250, 247, 242, 0.85) 100%);
 }
 
 .veil-dark-left {
   background:
-    linear-gradient(270deg, rgba(28, 34, 32, 0.96) 0%, rgba(28, 34, 32, 0.76) 36%, rgba(28, 34, 32, 0.08) 72%, rgba(28, 34, 32, 0.04) 100%),
-    linear-gradient(180deg, rgba(28, 34, 32, 0.3) 0%, transparent 20%, transparent 78%, rgba(28, 34, 32, 0.9) 100%);
+    linear-gradient(270deg, rgba(28, 34, 32, 0.96) 0%, rgba(28, 34, 32, 0.46) 40%, transparent 64%, transparent 100%),
+    linear-gradient(180deg, rgba(28, 34, 32, 0.16) 0%, transparent 18%, transparent 82%, rgba(28, 34, 32, 0.9) 100%);
 }
 
 .veil-sage-left {
   background:
-    linear-gradient(270deg, rgba(230, 239, 234, 0.97) 0%, rgba(230, 239, 234, 0.82) 38%, rgba(230, 239, 234, 0.14) 76%, rgba(230, 239, 234, 0.04) 100%),
-    linear-gradient(180deg, transparent 55%, rgba(230, 239, 234, 0.92) 100%);
+    linear-gradient(270deg, rgba(230, 239, 234, 0.98) 0%, rgba(230, 239, 234, 0.48) 38%, transparent 64%, transparent 100%),
+    linear-gradient(180deg, rgba(230, 239, 234, 0.14) 0%, transparent 16%, transparent 84%, rgba(230, 239, 234, 0.94) 100%);
 }
 
 .veil-booking-mist {
@@ -366,7 +368,7 @@ hr {
   display: grid;
   grid-template-columns: 1.08fr 0.92fr;
   gap: 3.5rem;
-  align-items: end;
+  align-items: center;
 }
 
 .g-hero-pill {
@@ -407,7 +409,26 @@ hr {
   display: flex;
   flex-wrap: wrap;
   gap: 0.9rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.g-hero-highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.15rem;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 1.5rem;
+  max-width: 520px;
+}
+
+.g-hero-highlight .g-float-num {
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .g-trust-pills {
@@ -429,9 +450,6 @@ hr {
 
 .g-hero-window {
   min-height: 520px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
 }
 
 .g-float-card {
@@ -563,28 +581,23 @@ hr {
 
 .g-about-grid {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: 0.85fr 1.15fr;
   gap: 3.5rem;
-  align-items: stretch;
+  align-items: center;
 }
 
 .g-about-window {
   min-height: 540px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
 }
 
 .g-standards-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 1.35rem;
+  padding: 1.35rem 1.5rem;
   box-shadow: var(--shadow-card);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 340px;
+  width: 100%;
+  margin-bottom: 1.25rem;
 }
 
 .g-standards-card.dark-glass,
@@ -614,11 +627,11 @@ hr {
 
 .g-std-list {
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  font-size: 0.85rem;
-  color: rgba(250, 247, 242, 0.86);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem 1.25rem;
+  font-size: 0.86rem;
+  color: rgba(250, 247, 242, 0.88);
 }
 
 .g-sec-badge.light {
@@ -983,7 +996,7 @@ hr {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
-  margin-bottom: 4rem;
+  margin-bottom: 0;
 }
 
 .g-step-card {
@@ -1014,39 +1027,36 @@ hr {
   color: var(--color-muted);
 }
 
-.g-anxiety-box {
+.g-empathy-sec {
   background: var(--color-sage-mist);
-  border-radius: var(--radius-lg);
-  padding: 2.75rem;
-  min-height: 460px;
-  display: grid;
-  grid-template-columns: 0.88fr 1.12fr;
-  gap: 2.5rem;
-  align-items: stretch;
-}
-
-.g-anxiety-intro {
+  padding: 5.5rem 0;
+  min-height: 600px;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  align-items: center;
 }
 
-.g-anxiety-glass-card {
-  background: rgba(255, 255, 255, 0.84);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: var(--radius-md);
-  padding: 1.4rem 1.5rem;
-  box-shadow: var(--shadow-soft);
+.g-empathy-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 3.5rem;
+  align-items: center;
 }
 
-.g-anxiety-intro h3 {
-  font-size: 1.45rem;
-  margin-bottom: 0.65rem;
+.g-empathy-window {
+  min-height: 520px;
 }
 
-.g-anxiety-intro p {
-  font-size: 0.94rem;
+.g-empathy-header {
+  margin-bottom: 1.75rem;
+}
+
+.g-empathy-header h2 {
+  font-size: clamp(1.75rem, 2.8vw, 2.25rem);
+  margin-bottom: 0.75rem;
+}
+
+.g-empathy-header p {
+  font-size: 0.98rem;
   color: var(--color-muted);
   margin-bottom: 0;
 }
@@ -3197,7 +3207,7 @@ hr {
 
   .g-hero-grid,
   .g-about-grid,
-  .g-anxiety-box {
+  .g-empathy-grid {
     gap: 2rem;
   }
 
@@ -3274,9 +3284,15 @@ hr {
 
   .g-hero-grid,
   .g-about-grid,
-  .g-anxiety-box {
+  .g-empathy-grid {
     grid-template-columns: 1fr;
     gap: 1.35rem;
+  }
+
+  .g-hero-window,
+  .g-about-window,
+  .g-empathy-window {
+    display: none;
   }
 
   /* True aspect-ratio portrait stage for mobile phones: top 72% stays crisp over face */
@@ -3288,58 +3304,50 @@ hr {
     top: auto;
     bottom: auto;
     width: 100%;
+    max-width: none;
     aspect-ratio: 4 / 4.2;
-    max-height: 460px;
-    margin-bottom: -82px;
+    max-height: 440px;
+    margin-bottom: -68px;
     -webkit-mask-image: linear-gradient(to bottom, #000000 0%, #000000 72%, rgba(0, 0, 0, 0.45) 88%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000000 0%, #000000 72%, rgba(0, 0, 0, 0.45) 88%, transparent 100%);
   }
 
-  .g-about.dark-studio > .photo-stage-bg {
+  .g-about.dark-studio.photo-left > .photo-stage-bg {
     aspect-ratio: 4 / 4.5;
-    max-height: 490px;
-    margin-bottom: -72px;
+    max-height: 460px;
+    margin-bottom: -64px;
   }
 
-  .g-anxiety-box {
-    padding: 0 0 1.25rem;
-  }
-
-  .g-anxiety-box > .photo-stage-bg {
-    width: 100%;
-    margin: 0 0 -36px;
-    aspect-ratio: 4 / 4.8;
-    max-height: 480px;
-    -webkit-mask-image: linear-gradient(to bottom, #000000 0%, #000000 76%, rgba(0, 0, 0, 0.45) 90%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000000 0%, #000000 76%, rgba(0, 0, 0, 0.45) 90%, transparent 100%);
+  .g-empathy-sec.photo-left > .photo-stage-bg {
+    aspect-ratio: 4 / 4.3;
+    max-height: 460px;
+    margin-bottom: -65px;
   }
 
   .photo-stage-img.hero-pos {
-    object-position: 50% 10%;
+    object-position: 50% top;
   }
 
-  .photo-stage-img.studio-pos {
-    object-position: center top;
-  }
-
+  .photo-stage-img.studio-pos,
   .photo-stage-img.empathy-pos {
     object-position: center top;
   }
 
   .veil-alabaster-right {
-    background: linear-gradient(180deg, transparent 0%, transparent 56%, rgba(250, 247, 242, 0.72) 84%, rgba(250, 247, 242, 0.98) 100%);
+    background: linear-gradient(180deg, transparent 0%, transparent 62%, rgba(250, 247, 242, 0.72) 86%, rgba(250, 247, 242, 0.98) 100%);
   }
 
   .veil-dark-left {
-    background: linear-gradient(180deg, transparent 0%, transparent 56%, rgba(28, 34, 32, 0.72) 84%, rgba(28, 34, 32, 0.98) 100%);
+    background: linear-gradient(180deg, transparent 0%, transparent 62%, rgba(28, 34, 32, 0.72) 86%, rgba(28, 34, 32, 0.98) 100%);
   }
 
   .veil-sage-left {
-    background: linear-gradient(180deg, transparent 0%, transparent 60%, rgba(230, 239, 234, 0.74) 86%, rgba(230, 239, 234, 0.98) 100%);
+    background: linear-gradient(180deg, transparent 0%, transparent 62%, rgba(230, 239, 234, 0.74) 86%, rgba(230, 239, 234, 0.98) 100%);
   }
 
   .g-hero,
-  .g-about.dark-studio {
+  .g-about.dark-studio,
+  .g-empathy-sec {
     min-height: auto;
     display: block;
     padding: 0 0 3.25rem;
@@ -3358,34 +3366,15 @@ hr {
     margin-bottom: 2rem;
   }
 
-  .g-hero-window {
-    order: -1;
-    min-height: 0;
-    justify-content: flex-start;
-    margin-bottom: 0.25rem;
-  }
-
-  .g-float-card {
-    max-width: 100%;
-    text-align: left;
-  }
-
-  .g-about-window {
-    min-height: 0;
-    justify-content: flex-start;
-  }
-
-  .g-standards-card {
-    max-width: 100%;
+  .g-hero-highlight {
     width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.85rem;
   }
 
-  .g-anxiety-intro {
-    padding: 0 1rem;
-  }
-
-  .g-anxiety-list {
-    padding: 0 1rem;
+  .g-std-list {
+    grid-template-columns: 1fr;
   }
 
   .g-hero-btns {
