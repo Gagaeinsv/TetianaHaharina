@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-export default function AdminLogin() {
+export default function AdminLoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -13,7 +13,7 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!password) {
-      setError('Введіть пароль');
+      setError('Введіть пароль адміністратора');
       return;
     }
 
@@ -28,13 +28,12 @@ export default function AdminLogin() {
       });
 
       const data = await res.json();
-
       if (data.success) {
         router.push('/admin');
       } else {
         setError(data.error || 'Неправильний пароль');
       }
-    } catch (err) {
+    } catch {
       setError('Помилка з’єднання з сервером');
     } finally {
       setLoading(false);
@@ -42,33 +41,38 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <h2>Вхід в адмін-панель</h2>
-        <p className="login-subtitle">Введіть пароль адміністратора для керування контентом</p>
-        
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="password">Пароль</label>
+    <div className="adm-login-wrap">
+      <div className="adm-login-card">
+        <span className="adm-login-badge">🔐 Захищений простір</span>
+        <h1>Кабінет фахівчині</h1>
+        <p className="adm-login-sub">
+          Увійдіть для керування розкладом, бронюваннями клієнтів, послугами та контентом сайту.
+        </p>
+
+        <form onSubmit={handleSubmit} className="adm-login-form">
+          <div className="adm-field">
+            <label htmlFor="admin-password">Пароль адміністратора</label>
             <input
+              id="admin-password"
               type="password"
-              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••••••"
+              placeholder="Введіть пароль..."
               disabled={loading}
+              autoFocus
             />
           </div>
-          
-          {error && <div className="error-message">{error}</div>}
-          
+
+          {error && <div className="adm-alert adm-alert-err">{error}</div>}
+
           <button type="submit" className="btn btn-primary w-full" disabled={loading}>
-            {loading ? 'Вхід...' : 'Увійти'}
+            {loading ? 'Перевірка...' : 'Увійти в кабінет →'}
           </button>
         </form>
-        
-        <div className="login-footer">
-          <Link href="/">Повернутися на сайт</Link>
+
+        <div className="adm-login-links">
+          <Link href="/">← Повернутися на сайт</Link>
+          <Link href="/cabinet">Кабінет клієнта</Link>
         </div>
       </div>
     </div>

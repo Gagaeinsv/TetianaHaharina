@@ -1,45 +1,44 @@
-import "./globals.css";
+import './globals.css';
+import prisma from '@/lib/db';
 
-import prisma from "@/lib/db";
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export async function generateMetadata() {
   try {
     const profile = await prisma.profile.findFirst();
     if (profile) {
-      const name = profile.name;
-      const title = profile.title;
-      const subtitle = profile.subtitle;
       return {
-        title: `${name} — Психолог, ${subtitle}`,
-        description: `Офіційні психологічні консультації та психотерапія. ${title}. Запис на сесію онлайн. ФОП ${name}.`,
+        title: `${profile.name} — ${profile.subtitle}`,
+        description: `Офіційні психологічні консультації онлайн, сімейна та підліткова психологія, інтервізія. ${profile.bio.slice(0, 140)}`,
         openGraph: {
-          title: `${name} — Психолог`,
-          description: `Професійна психотерапія, консультації та підтримка онлайн.`,
-          images: [{ url: "/avatar.jpg" }],
-        }
+          title: `${profile.name} — Психолог, Інтервізорка`,
+          description: 'Професійна психологічна підтримка, дитячо-батьківські стосунки та онлайн-запис.',
+          images: [{ url: '/avatar.jpg' }],
+        },
       };
     }
   } catch (e) {
-    console.error("Error generating metadata dynamically:", e);
+    console.error('Metadata fallback:', e);
   }
 
   return {
-    title: "Психолог — Професійна психологічна допомога",
-    description: "Офіційні психологічні консультації та психотерапія. Запис на сесію онлайн.",
+    title: 'Гагаріна Тетяна — Психолог, Інтервізорка',
+    description: 'Офіційні психологічні консультації онлайн. Запис на сесію та особистий кабінет.',
     openGraph: {
-      title: "Психолог — Професійна психологічна допомога",
-      description: "Офіційні психологічні консультації та психотерапія. Запис на сесію онлайн.",
-      images: [{ url: "/avatar.jpg" }],
-    }
+      title: 'Гагаріна Тетяна — Психолог',
+      description: 'Професійна психотерапія та психологічна підтримка онлайн.',
+      images: [{ url: '/avatar.jpg' }],
+    },
   };
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="uk">
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

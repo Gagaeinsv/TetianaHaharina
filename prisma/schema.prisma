@@ -16,27 +16,44 @@ model Profile {
   experience      Int
   phone           String
   whatsapp        String
+  telegram        String           @default("")
   facebook        String
+  instagram       String           @default("")
   calendlyLink    String           @default("")
+  bookingMode     String           @default("INTERNAL") // "INTERNAL", "CALENDLY", "BOTH"
+  workingDays     String           @default("[1,2,3,4,5,6]") // JSON array of weekdays (0=Sun..6=Sat)
+  defaultSlots    String           @default("[\"09:00\",\"10:30\",\"12:00\",\"14:00\",\"15:30\",\"17:00\",\"18:30\"]")
   specializations Specialization[]
   paymentSettings PaymentSetting?
 }
 
 model Specialization {
-  id        Int     @id @default(autoincrement())
-  name      String
-  profileId Int
-  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String  @default("")
+  profileId   Int
+  profile     Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 }
 
 model Service {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String
-  duration    Int       // in minutes
-  priceUah    Int
-  calendlyLink String   @default("")
-  bookings    Booking[]
+  id           Int       @id @default(autoincrement())
+  name         String
+  description  String
+  duration     Int       // in minutes
+  priceUah     Int
+  category     String    @default("INDIVIDUAL") // "INDIVIDUAL", "FAMILY", "SUPERVISION"
+  calendlyLink String    @default("")
+  isActive     Boolean   @default(true)
+  bookings     Booking[]
+}
+
+model ScheduleOverride {
+  id           Int     @id @default(autoincrement())
+  date         String  @unique // YYYY-MM-DD
+  isDayOff     Boolean @default(false)
+  blockedSlots String  @default("[]") // JSON array of HH:MM strings blocked on this date
+  extraSlots   String  @default("[]") // JSON array of extra HH:MM strings opened on this date
+  note         String  @default("")
 }
 
 model LegalDoc {
@@ -47,31 +64,36 @@ model LegalDoc {
 }
 
 model Booking {
-  id            String   @id @default(uuid())
-  clientName    String
-  clientPhone   String
-  clientEmail   String
-  date          String   // YYYY-MM-DD
-  timeSlot      String   // HH:MM
-  serviceId     Int
-  service       Service  @relation(fields: [serviceId], references: [id])
-  status        String   @default("PENDING") // "PENDING", "CONFIRMED", "CANCELLED"
-  paymentStatus String   @default("PENDING") // "PENDING", "PAID"
-  paymentMethod String   @default("IBAN")    // "IBAN", "MONO", "PAYPAL"
-  createdAt     DateTime @default(now())
+  id               String   @id @default(uuid())
+  bookingCode      String   @default("")
+  clientName       String
+  clientPhone      String
+  clientEmail      String
+  clientTelegram   String   @default("")
+  clientNotes      String   @default("")
+  date             String   // YYYY-MM-DD
+  timeSlot         String   // HH:MM
+  serviceId        Int
+  service          Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  status           String   @default("PENDING") // "PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"
+  paymentStatus    String   @default("PENDING") // "PENDING", "PAID"
+  paymentMethod    String   @default("IBAN")    // "IBAN", "MONO", "PAYPAL"
+  meetingLink      String   @default("")        // Zoom / Google Meet URL set by psychologist
+  psychologistNote String   @default("")        // Note visible to client in /cabinet
+  createdAt        DateTime @default(now())
 }
 
 model PaymentSetting {
-  id         Int     @id @default(1)
-  profileId  Int     @unique
-  profile    Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  iban       String  @default("")
-  bankName   String  @default("")
-  edrpou     String  @default("")
-  monoLink   String  @default("")
-  paypalLink String  @default("")
-  paypalEmail String @default("")
-  useIban    Boolean @default(true)
-  useMono    Boolean @default(false)
-  usePaypal  Boolean @default(false)
+  id          Int     @id @default(1)
+  profileId   Int     @unique
+  profile     Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  iban        String  @default("")
+  bankName    String  @default("")
+  edrpou      String  @default("")
+  monoLink    String  @default("")
+  paypalLink  String  @default("")
+  paypalEmail String  @default("")
+  useIban     Boolean @default(true)
+  useMono     Boolean @default(false)
+  usePaypal   Boolean @default(false)
 }

@@ -1,49 +1,65 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { checkAuth } from '@/lib/auth';
+import { ensureSeeded } from '@/lib/defaultData';
+
+export const dynamic = 'force-dynamic';
 
 export async function POST(request) {
   try {
-    // 1. Verify Authentication
-    const isAuthorized = await checkAuth(request);
+    const isAuthorized = await checkAuth();
     if (!isAuthorized) {
-      return NextResponse.json(
-        { success: false, error: 'Неавторизований доступ' },
-        { status: 401 }
-      );
+      return NextResponse.json({ success: false, error: 'Неавторизований доступ' }, { status: 401 });
     }
 
     const body = await request.json();
     const { profile, specializations, services, paymentSettings, legalDocs } = body;
 
-    // 2. Perform updates in a transaction
     await prisma.$transaction(async (tx) => {
-      // Update Profile
       if (profile) {
+        const updateProfileData = {
+          name: profile.name,
+          title: profile.title,
+          subtitle: profile.subtitle,
+          bio: profile.bio,
+          experience: parseInt(profile.experience, 10) || 0,
+          phone: profile.phone,
+          whatsapp: profile.whatsapp,
+          telegram: profile.telegram || '',
+          facebook: profile.facebook || '',
+          instagram: profile.instagram || '',
+          calendlyLink: profile.calendlyLink || '',
+          bookingMode: profile.bookingMode || 'INTERNAL',
+        };
+        if (profile.workingDays !== undefined) {
+          updateProfileData.workingDays =
+            typeof profile.workingDays === 'string'
+              ? profile.workingDays
+              : JSON.stringify(profile.workingDays);
+        }
+        if (profile.defaultSlots !== undefined) {
+          updateProfileData.defaultSlots =
+            typeof profile.defaultSlots === 'string'
+              ? profile.defaultSlots
+              : JSON.stringify(profile.defaultSlots);
+        }
+
         await tx.profile.update({
           where: { id: 1 },
-          data: {
-            name: profile.name,
-            title: profile.title,
-            subtitle: profile.subtitle,
-            bio: profile.bio,
-            experience: parseInt(profile.experience) || 0,
-            phone: profile.phone,
-            whatsapp: profile.whatsapp,
-            facebook: profile.facebook,
-            calendlyLink: profile.calendlyLink || '',
-          },
+          data: updateProfileData,
         });
       }
 
-      // Update Specializations (re-create them)
       if (specializations && Array.isArray(specializations)) {
         await tx.specialization.deleteMany({ where: { profileId: 1 } });
-        for (const specName of specializations) {
+        for (const item of specializations) {
+          const specName = typeof item === 'string' ? item : item?.name;
+          const specDesc = typeof item === 'string' ? '' : item?.description || '';
           if (specName && specName.trim()) {
             await tx.specialization.create({
               data: {
                 name: specName.trim(),
+                description: specDesc.trim(),
                 profileId: 1,
               },
             });
@@ -51,50 +67,46 @@ export async function POST(request) {
         }
       }
 
-      // Update Services (re-create them)
       if (services && Array.isArray(services)) {
-        // Warning: if we delete services, existing bookings pointing to them will fail or Cascade.
-        // In our schema, Service has relation to Booking but without Cascade delete.
-        // To be safe, we can update existing services by ID, create new ones, and delete removed ones that have no bookings.
-        // Or we can just update them one by one. Let's do a safe update/create loop:
         const currentServices = await tx.service.findMany();
-        const incomingIds = services.map(s => s.id).filter(id => !!id);
+        const incomingIds = services.map((s) => s.id).filter(Boolean);
 
-        // Delete services not in incoming list (only if they have no bookings, to avoid errors)
         for (const current of currentServices) {
           if (!incomingIds.includes(current.id)) {
-            // Check if it has bookings
             const bookingsCount = await tx.booking.count({ where: { serviceId: current.id } });
             if (bookingsCount === 0) {
               await tx.service.delete({ where: { id: current.id } });
+            } else {
+              await tx.service.update({
+                where: { id: current.id },
+                data: { isActive: false },
+              });
             }
           }
         }
 
-        // Upsert incoming services
         for (const s of services) {
           const serviceData = {
             name: s.name,
             description: s.description || '',
-            duration: parseInt(s.duration) || 50,
-            priceUah: parseInt(s.priceUah) || 0,
+            duration: parseInt(s.duration, 10) || 50,
+            priceUah: parseInt(s.priceUah, 10) || 0,
+            category: s.category || 'INDIVIDUAL',
             calendlyLink: s.calendlyLink || '',
+            isActive: s.isActive !== undefined ? Boolean(s.isActive) : true,
           };
 
-          if (s.id && currentServices.some(curr => curr.id === s.id)) {
+          if (s.id && currentServices.some((curr) => curr.id === s.id)) {
             await tx.service.update({
               where: { id: s.id },
               data: serviceData,
             });
           } else {
-            await tx.service.create({
-              data: serviceData,
-            });
+            await tx.service.create({ data: serviceData });
           }
         }
       }
 
-      // Update Payment Settings
       if (paymentSettings) {
         await tx.paymentSetting.upsert({
           where: { profileId: 1 },
@@ -124,7 +136,6 @@ export async function POST(request) {
         });
       }
 
-      // Update Legal Documents
       if (legalDocs && Array.isArray(legalDocs)) {
         for (const doc of legalDocs) {
           if (doc.id) {
@@ -149,37 +160,31 @@ export async function POST(request) {
     );
   }
 }
-export async function GET(request) {
+
+export async function GET() {
   try {
-    // Verify authentication first
-    const isAuthorized = await checkAuth(request);
+    const isAuthorized = await checkAuth();
     if (!isAuthorized) {
-      return NextResponse.json(
-        { success: false, error: 'Неавторизований доступ' },
-        { status: 401 }
-      );
+      return NextResponse.json({ success: false, error: 'Неавторизований доступ' }, { status: 401 });
     }
 
-    // Fetch everything including bookings
-    const profile = await prisma.profile.findFirst({
-      include: {
-        specializations: true,
-        paymentSettings: true,
-      },
-    });
+    await ensureSeeded(prisma);
 
-    const services = await prisma.service.findMany({
-      orderBy: { id: 'asc' },
-    });
-
-    const legalDocs = await prisma.legalDoc.findMany({
-      orderBy: { id: 'asc' },
-    });
-
-    const bookings = await prisma.booking.findMany({
-      include: { service: true },
-      orderBy: { date: 'desc' },
-    });
+    const [profile, services, legalDocs, bookings, scheduleOverrides] = await Promise.all([
+      prisma.profile.findFirst({
+        include: {
+          specializations: { orderBy: { id: 'asc' } },
+          paymentSettings: true,
+        },
+      }),
+      prisma.service.findMany({ orderBy: { id: 'asc' } }),
+      prisma.legalDoc.findMany({ orderBy: { id: 'asc' } }),
+      prisma.booking.findMany({
+        include: { service: true },
+        orderBy: [{ date: 'desc' }, { timeSlot: 'desc' }],
+      }),
+      prisma.scheduleOverride.findMany({ orderBy: { date: 'asc' } }),
+    ]);
 
     return NextResponse.json({
       success: true,
@@ -187,6 +192,7 @@ export async function GET(request) {
       services,
       legalDocs,
       bookings,
+      scheduleOverrides,
     });
   } catch (error) {
     console.error('Error fetching admin content:', error);
