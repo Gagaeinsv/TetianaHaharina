@@ -255,9 +255,21 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="g-hero">
-        <div className="container g-hero-grid">
+      {/* Hero Section with Full-Bleed Portrait Backdrop */}
+      <section className="g-hero photo-stage photo-right">
+        <div className="photo-stage-bg" aria-hidden="true">
+          <Image
+            src="/avatar.jpg"
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 60vw"
+            className="photo-stage-img hero-pos"
+          />
+          <div className="photo-stage-veil veil-alabaster-right" />
+        </div>
+
+        <div className="container g-hero-grid photo-stage-content">
           <div className="g-hero-content">
             <span className="g-hero-pill">
               🌿 {profile.experience}+ років практичного досвіду • Онлайн по всьому світу
@@ -285,17 +297,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="g-hero-media">
-            <div className="g-arch-frame">
-              <Image
-                src="/avatar.jpg"
-                alt={profile.name}
-                width={800}
-                height={1000}
-                priority
-                className="g-hero-portrait"
-              />
-            </div>
+          <div className="g-hero-window">
             <div className="g-float-card">
               <div className="g-float-num">{profile.experience} років</div>
               <div className="g-float-text">
@@ -342,62 +344,47 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* About Section with Editorial Portrait Showcase & Professional Standards */}
-      <section id="about" className="g-about">
-        <div className="container g-about-grid">
-          <div className="g-about-media">
-            <div className="g-about-showcase">
-              <div className="g-portrait-main">
-                <Image
-                  src="/avatar4.jpg"
-                  alt={`${profile.name} — практикуючий психолог`}
-                  width={800}
-                  height={600}
-                />
-                <div className="g-portrait-caption">
-                  <span>{profile.name}</span>
-                  <small>Практикуючий психолог • Інтервізорка</small>
-                </div>
-              </div>
+      {/* About Section with Studio Portrait Backdrop & Dark-Glass Overlay */}
+      <section id="about" className="g-about photo-stage photo-left dark-studio">
+        <div className="photo-stage-bg" aria-hidden="true">
+          <Image
+            src="/avatar4.jpg"
+            alt=""
+            fill
+            sizes="(max-width: 1024px) 100vw, 55vw"
+            className="photo-stage-img studio-pos"
+          />
+          <div className="photo-stage-veil veil-dark-left" />
+        </div>
 
-              <div className="g-portrait-sub-row">
-                <div className="g-portrait-secondary">
-                  <Image
-                    src="/avatar5.jpg"
-                    alt={`${profile.name} — атмосфера довіри`}
-                    width={600}
-                    height={700}
-                  />
-                </div>
-
-                <div className="g-standards-card">
-                  <span className="g-std-badge">Етика та супервізія</span>
-                  <h4>Професійні стандарти</h4>
-                  <ul className="g-std-list">
-                    <li>✦ Понад 2000+ годин практики</li>
-                    <li>✦ Координаторка ПЦ «Перспектива»</li>
-                    <li>✦ Волонтерка ГО «Разом» та ГО «Ранні пташки»</li>
-                    <li>✦ Регулярна супервізія та інтервізія</li>
-                  </ul>
-                </div>
-              </div>
+        <div className="container g-about-grid photo-stage-content">
+          <div className="g-about-window">
+            <div className="g-standards-card dark-glass">
+              <span className="g-std-badge">Етика та супервізія</span>
+              <h4>Професійні стандарти</h4>
+              <ul className="g-std-list">
+                <li>✦ Понад 2000+ годин практики</li>
+                <li>✦ Координаторка ПЦ «Перспектива»</li>
+                <li>✦ Волонтерка ГО «Разом» та ГО «Ранні пташки»</li>
+                <li>✦ Регулярна супервізія та інтервізія</li>
+              </ul>
             </div>
           </div>
 
-          <div className="g-about-body">
-            <span className="g-sec-badge">Про мене та досвід</span>
+          <div className="g-about-body dark-surface">
+            <span className="g-sec-badge light">Про мене та досвід</span>
             <h2>{profile.name}</h2>
-            <p className="g-about-sub">{profile.title} — {profile.subtitle}</p>
-            <p className="g-about-bio">{profile.bio}</p>
+            <p className="g-about-sub light">{profile.title} — {profile.subtitle}</p>
+            <p className="g-about-bio light">{profile.bio}</p>
 
-            <div className="g-org-tags">
+            <div className="g-org-tags dark">
               <span>ГО «Соціальний проєкт «Разом»»</span>
               <span>ГО «Ранні пташки»</span>
               <span>Гейткіпер</span>
               <span>Координаторка ПЦ «Перспектива»</span>
             </div>
 
-            <div className="g-facts-box">
+            <div className="g-facts-box dark-glass">
               <h3>Ключова інформація</h3>
               <ul>
                 <li><strong>Освіта:</strong> Вища психологічна, регулярна інтервізія та супервізія</li>
@@ -572,19 +559,29 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="g-anxiety-box">
-            <div className="g-anxiety-intro">
-              <span className="g-sec-badge">Підтримка перед стартом</span>
-              <h3>Це нормально — хвилюватися перед першою сесією</h3>
-              <p>
-                Багато клієнтів сумніваються, про що говорити і як усе відбуватиметься. Натисніть на питання, щоб дізнатися деталі.
-              </p>
-              <div className="g-anxiety-photo-wrap">
-                <Image src="/avatar5.jpg" alt={profile.name} width={480} height={360} />
+          <div className="g-anxiety-box photo-stage photo-left">
+            <div className="photo-stage-bg" aria-hidden="true">
+              <Image
+                src="/avatar5.jpg"
+                alt=""
+                fill
+                sizes="(max-width: 1024px) 100vw, 55vw"
+                className="photo-stage-img empathy-pos"
+              />
+              <div className="photo-stage-veil veil-sage-left" />
+            </div>
+
+            <div className="g-anxiety-intro photo-stage-content">
+              <div className="g-anxiety-glass-card">
+                <span className="g-sec-badge">Підтримка перед стартом</span>
+                <h3>Це нормально — хвилюватися перед першою сесією</h3>
+                <p>
+                  Багато клієнтів сумніваються, про що говорити і як усе відбуватиметься. Натисніть на питання, щоб дізнатися деталі.
+                </p>
               </div>
             </div>
 
-            <div className="g-anxiety-list">
+            <div className="g-anxiety-list photo-stage-content">
               {ANXIETY_ITEMS.map((item, idx) => (
                 <div
                   key={idx}
@@ -688,9 +685,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Booking Calendar Section */}
-      <section id="booking" className="g-booking-sec">
-        <div className="container">
+      {/* Booking Calendar Section with Atmospheric Nature Bokeh Backdrop */}
+      <section id="booking" className="g-booking-sec photo-stage">
+        <div className="photo-stage-full" aria-hidden="true">
+          <Image
+            src="/nature_booking_bg.png"
+            alt=""
+            fill
+            sizes="100vw"
+            className="photo-stage-img"
+          />
+          <div className="photo-stage-veil veil-booking-mist" />
+        </div>
+
+        <div className="container photo-stage-content">
           <div className="g-sec-header center">
             <span className="g-sec-badge">Онлайн-запис</span>
             <h2>Оберіть день та час консультації</h2>
